@@ -11,3 +11,6 @@ This is the website for the Berlin High School Redcoat Rambler.
 
 - Clearly defined sections
 - ideas submission part
+
+
+MARCO IS DUMMMM
