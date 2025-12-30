@@ -19,6 +19,8 @@
   --shadow-soft: 0 8px 20px oklch(0% 0 0 / 0.35);
   --shadow-medium: 0 12px 35px oklch(0% 0 0 / 0.45);
   --shadow-heavy: 0 20px 60px oklch(0% 0 0 / 0.6);
+  --nav-width: 90%;
+  --nav-border-radius: 100px;
 }
 
 [data-theme="light"] {
@@ -81,12 +83,12 @@ body {
   align-items: center; /* This vertically centers everything inside */
   padding: 0.75rem 2rem;
   margin: 0 auto;
-  width: 90%;
+  width: var(--nav-width);
   max-width: 1100px;
   background: oklch(22% 0.03 260 / 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-radius: 100px;
+  border-radius: var(--nav-border-radius);
   border: 1px solid oklch(100% 0 0 / 0.1);
   box-shadow: var(--shadow-heavy);
   transition: all 0.3s ease;
@@ -728,6 +730,204 @@ footer {
 }
 
 /* =========================
+   SUBMISSION PAGE
+   ========================= */
+
+.submission-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.submission-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.submission-header h2 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.submission-header p {
+  color: var(--text-muted);
+}
+
+.idea-form {
+  background: var(--bg-card);
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: var(--shadow-medium);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+  background: var(--bg-main);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, var(--blue), var(--red));
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-heavy);
+}
+
+
+/* =========================
+   PROGRESS BAR FIX
+   ========================= */
+#progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* CHANGE THIS: 100% means 'fill the available flat space' */
+  width: calc(100% - (var(--nav-border-radius)));
+  
+  /* This matches your navbar's own max-width minus the corners */
+  max-width: calc(1100px - (var(--nav-border-radius) * 2));
+  
+  height: 3px;
+  background: oklch(100% 0 0 / 0.05);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--blue), var(--red));
+  transition: width 0.1s ease-out;
+}
+
+
+
+/* =========================
+   404 ERROR PAGE
+   ========================= */
+
+.error-page {
+  text-align: center;
+  max-width: 600px;
+  margin: 6rem auto;
+  padding: 2rem;
+}
+
+.error-badge {
+  display: inline-block;
+  background: var(--tag-bg);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--red);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.error-title {
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+/* The "Redacted" Black Bar Effect */
+.redacted {
+  background: var(--text-main);
+  color: var(--text-main);
+  padding: 0 0.2rem;
+  transition: color 0.5s ease;
+  cursor: help;
+}
+
+.redacted:hover {
+  color: transparent; /* Makes it look like it's being "un-hidden" */
+}
+
+.error-text {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+.error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Reusable Button Styles */
+.primary-btn {
+  background: linear-gradient(135deg, var(--blue), var(--red));
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: transform 0.2s;
+}
+
+.secondary-btn {
+  background: var(--bg-card);
+  color: var(--text-main);
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  font-weight: 700;
+  transition: background 0.2s;
+}
+
+.primary-btn:hover, .secondary-btn:hover {
+  transform: translateY(-3px);
+}
+
+
+/* =========================
    MOBILE RESPONSIVENESS
    ========================= */
 
@@ -740,7 +940,7 @@ footer {
   background: none;
   border: none;
   padding: 10px;
-  z-index: 101;
+  z-index: 201;
 }
 
 /* The default state (Menu Closed) */

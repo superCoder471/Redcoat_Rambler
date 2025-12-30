@@ -46,6 +46,18 @@ if (menuBtn) {
   });
 }
 
+window.addEventListener('scroll', () => {
+  const progressBar = document.getElementById('progress-bar');
+  if (progressBar) {
+    // Calculate percentage: (current scroll / (total height - window height)) * 100
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    
+    progressBar.style.width = scrolled + "%";
+  }
+});
+
 //SHARE BUTTOIN
 const shareBtn = document.getElementById('share-btn');
 

@@ -1,0 +1,39 @@
+1. The "Read Progress" Bar
+Since you have a floating navbar, it is very easy to add a thin progress bar at the bottom of the pill that fills up as the user scrolls through an article. It’s a great visual cue for long-form news.
+
+How to do it:
+
+CSS: Create a div inside your .navbar with a width of 0% and a height of 2px.
+
+JS: A simple 3-line scroll listener that updates that width based on the scroll percentage.
+
+2. Custom 404 "Page Not Found"
+Every professional publication needs a stylish 404 page. It’s a chance to show some personality.
+
+The Idea: "Looks like this story was redacted."
+
+The Design: Use your existing container and hero styles, but add a search bar (which can just link back to the archive for now) and a "Return to Home" button.
+
+3. CSS-Only Image "Skeleton" Loaders
+If you plan on adding images to your stories later, you can style the placeholders now so they don't look like broken boxes while loading.
+
+The Trick: Give your image containers a subtle shimmying gradient animation using @keyframes.
+
+The Vibe: It makes the site feel fast and reactive, even if it's just a static placeholder.
+
+CSS
+
+/* Example of a CSS-only skeleton loader */
+.image-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-elevated) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 18px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
