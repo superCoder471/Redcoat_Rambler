@@ -8,8 +8,8 @@
   --bg-card: oklch(22% 0.03 260);
   --bg-elevated: oklch(26% 0.04 260);
 
-  --blue: oklch(65% 0.18 255);
-  --red: oklch(60% 0.22 25);
+  --blue: oklch(55% 0.18 255);
+  --red: oklch(50% 0.22 25);
 
   --text-main: oklch(95% 0.01 260);
   --text-muted: oklch(75% 0.02 260);
@@ -509,32 +509,26 @@ footer {
   padding: 0.5rem 0.8rem;
   cursor: pointer;
 
-  font-size: 1.4rem; /* slightly bigger for icon */
+  font-size: 1.4rem;
   font-weight: 700;
-  box-shadow: var(--shadow-soft);
   transition: 
     transform 0.2s ease,
-    box-shadow 0.2s ease,
-    color 0.3s ease,
-    border 0.3s ease;
-  
-  /* Default dark mode */
-  color: var(--blue); /* moon */
-  border-color: var(--blue);
+    filter 0.3s ease;
+
+  /* Default dark mode - blue moon */
+  filter: hue-rotate(220deg) brightness(1.2);
 }
 
 #theme-toggle:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-medium);
 }
 
 #theme-toggle:active {
   transform: translateY(0px);
-  box-shadow: var(--shadow-soft);
 }
 
 /* Light theme overrides */
 [data-theme="light"] #theme-toggle {
-  color: var(--red); /* sun */
-  border-color: var(--red);
+  /* Red sun */
+  filter: hue-rotate(0deg) brightness(1.2);
 }
