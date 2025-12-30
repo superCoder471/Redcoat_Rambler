@@ -1,0 +1,493 @@
+/* =========================
+   COLOR SYSTEM & THEME TOGGLE
+   ========================= */
+
+/* Dark theme (default) */
+:root {
+  --bg-main: oklch(18% 0.02 260);
+  --bg-card: oklch(22% 0.03 260);
+  --bg-elevated: oklch(26% 0.04 260);
+
+  --blue: oklch(65% 0.18 255);
+  --red: oklch(60% 0.22 25);
+
+  --text-main: oklch(95% 0.01 260);
+  --text-muted: oklch(75% 0.02 260);
+
+  --shadow-soft: 0 8px 20px oklch(0% 0 0 / 0.35);
+  --shadow-medium: 0 12px 35px oklch(0% 0 0 / 0.45);
+  --shadow-heavy: 0 20px 60px oklch(0% 0 0 / 0.6);
+}
+
+[data-theme="light"] {
+  /* Backgrounds */
+  --bg-main: oklch(98% 0.01 260);
+  --bg-card: oklch(95% 0.02 260);
+  --bg-elevated: oklch(92% 0.02 260);
+
+  /* Accent colors (lighter for gradients) */
+  --blue: oklch(80% 0.08 255);   /* lighter, softer blue */
+  --red: oklch(75% 0.1 25);      /* lighter, softer red */
+
+  /* Text */
+  --text-main: oklch(18% 0.02 260);
+  --text-muted: oklch(40% 0.02 260);
+
+  /* Shadows — lighter but still soft */
+  --shadow-soft: 0 6px 18px oklch(0% 0 0 / 0.08);
+  --shadow-medium: 0 12px 30px oklch(0% 0 0 / 0.12);
+  --shadow-heavy: 0 20px 45px oklch(0% 0 0 / 0.18);
+}
+
+/* tell browser we support both modes */
+html {
+  color-scheme: light dark;
+}
+
+
+
+/* =========================
+   RESET & BASE
+   ========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* =========================
+   NAVBAR
+   ========================= */
+
+.navbar {
+  background: oklch(20% 0.03 260);
+  padding: 1.25rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow: var(--shadow-medium);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+
+  background: linear-gradient(
+    120deg,
+    var(--blue),
+    var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+nav a {
+  margin-left: 2rem;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--text-main);
+}
+
+/* =========================
+   LAYOUT
+   ========================= */
+
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* =========================
+   HERO (keep the gradient 👀)
+   ========================= */
+
+.hero {
+  background:
+    radial-gradient(
+      120% 120% at top left,
+      oklch(70% 0.2 255 / 0.25),
+      transparent
+    ),
+    linear-gradient(
+      135deg,
+      var(--blue),
+      var(--red)
+    );
+
+  padding: 4rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-heavy);
+  margin-bottom: 4rem;
+}
+
+.hero h2 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.hero p {
+  color: var(--text-muted);
+  max-width: 600px;
+  font-size: 1.1rem;
+}
+
+/* =========================
+   STORIES
+   ========================= */
+
+.stories h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+/* =========================
+   STORY CARDS
+   ========================= */
+
+.story-card {
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: 18px;
+
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 oklch(100% 0 0 / 0.05);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-heavy);
+}
+
+.story-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.story-card p {
+  color: var(--text-muted);
+}
+
+.story-card a {
+  display: inline-block;
+  margin-top: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+
+  background: linear-gradient(
+    120deg,
+    var(--blue),
+    var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   ARCHIVE PAGE
+   ========================= */
+
+.archive-header {
+  margin-bottom: 3rem;
+}
+
+.archive-header h2 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.archive-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.archive-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.archive-item {
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: 18px;
+
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 oklch(100% 0 0 / 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.archive-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.archive-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.archive-section {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: oklch(30% 0.1 260);
+  font-weight: 600;
+}
+
+.archive-item h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.archive-item p {
+  color: var(--text-muted);
+  max-width: 700px;
+}
+
+.archive-item a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-weight: 600;
+
+  background: linear-gradient(
+    120deg,
+    var(--blue),
+    var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   ARTICLE PAGE
+   ========================= */
+
+.article {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.article-header {
+  margin-bottom: 3rem;
+}
+
+.article-section {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.8rem;
+
+  border-radius: 999px;
+  background: oklch(32% 0.12 260);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.article-header h1 {
+  font-size: 3rem;
+  line-height: 1.15;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+.article-dek {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin-bottom: 1.5rem;
+}
+
+.article-meta {
+  display: flex;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.article-body {
+  font-size: 1.05rem;
+}
+
+.article-body p {
+  margin-bottom: 1.5rem;
+  color: oklch(92% 0.01 260);
+}
+
+.article-body h2 {
+  font-size: 1.6rem;
+  margin: 3rem 0 1rem;
+  font-weight: 800;
+}
+
+/* =========================
+   AUTHORS PAGE
+   ========================= */
+
+.authors-header {
+  margin-bottom: 3rem;
+}
+
+.authors-header h2 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.authors-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.authors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+}
+
+.author-card {
+  background: var(--bg-card);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 oklch(100% 0 0 / 0.04);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.author-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-heavy);
+}
+
+.author-card img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.25rem;
+
+  box-shadow: var(--shadow-medium);
+}
+
+.author-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  font-weight: 800;
+
+  background: linear-gradient(
+    120deg,
+    var(--blue),
+    var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+.author-role {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.author-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+/* =========================
+   THEME TOGGLE BUTTON ICON
+   ========================= */
+#theme-toggle {
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+
+  font-size: 1.4rem; /* slightly bigger for icon */
+  font-weight: 700;
+  box-shadow: var(--shadow-soft);
+  transition: 
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.3s ease,
+    border 0.3s ease;
+  
+  /* Default dark mode */
+  color: var(--blue); /* moon */
+  border-color: var(--blue);
+}
+
+#theme-toggle:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
+}
+
+#theme-toggle:active {
+  transform: translateY(0px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Light theme overrides */
+[data-theme="light"] #theme-toggle {
+  color: var(--red); /* sun */
+  border-color: var(--red);
+}
