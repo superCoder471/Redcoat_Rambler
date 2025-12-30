@@ -544,7 +544,7 @@ footer {
 .menu-toggle span {
   width: 25px;
   height: 3px;
-  background: var(--text-main);
+  background: oklch(95% 0.01 260);
   border-radius: 2px;
   transition: 0.3s;
 }
