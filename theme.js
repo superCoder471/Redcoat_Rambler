@@ -2,7 +2,7 @@ const toggleButton = document.getElementById('theme-toggle');
 const root = document.documentElement;
 
 // Apply saved theme on load
-const savedTheme = localStorage.getItem('theme');
+const savedTheme = localStorage.getItem('theme') || 'dark';
 if (savedTheme) {
   root.setAttribute('data-theme', savedTheme);
   toggleButton.textContent = savedTheme === 'light' ? '☀️' : '🌙';
@@ -24,23 +24,21 @@ toggleButton.addEventListener('click', () => {
 
 // --- NEW MOBILE MENU LOGIC ---
 const menuBtn = document.getElementById('mobile-menu-btn');
-const navLinks = document.querySelector('nav');
+const navMenu = document.querySelector('nav');
 
 if (menuBtn) {
   menuBtn.addEventListener('click', () => {
-    // Toggle the menu sliding out
-    navLinks.classList.toggle('active');
-    
-    // Toggle the "is-active" class on the button itself to trigger the color change
+    navMenu.classList.toggle('active');
     menuBtn.classList.toggle('is-active');
 
-    // Optional: Animate the waffle into an X
     const spans = menuBtn.querySelectorAll('span');
-    if (navLinks.classList.contains('active')) {
+    if (menuBtn.classList.contains('is-active')) {
+      // Create the X
       spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
       spans[1].style.opacity = '0';
       spans[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
     } else {
+      // Reset to Waffle
       spans[0].style.transform = 'none';
       spans[1].style.opacity = '1';
       spans[2].style.transform = 'none';
