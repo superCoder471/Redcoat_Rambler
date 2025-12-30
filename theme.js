@@ -23,15 +23,27 @@ toggleButton.addEventListener('click', () => {
 });
 
 // --- NEW MOBILE MENU LOGIC ---
-const menuToggle = document.getElementById('mobile-menu-btn');
-const navMenu = document.querySelector('nav');
+const menuBtn = document.getElementById('mobile-menu-btn');
+const navLinks = document.querySelector('nav');
 
-if (menuToggle) {
-  menuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+if (menuBtn) {
+  menuBtn.addEventListener('click', () => {
+    // Toggle the menu sliding out
+    navLinks.classList.toggle('active');
     
-    // Optional: Animate hamburger to X
-    const spans = menuToggle.querySelectorAll('span');
-    spans.forEach(span => span.classList.toggle('open'));
+    // Toggle the "is-active" class on the button itself to trigger the color change
+    menuBtn.classList.toggle('is-active');
+
+    // Optional: Animate the waffle into an X
+    const spans = menuBtn.querySelectorAll('span');
+    if (navLinks.classList.contains('active')) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+    } else {
+      spans[0].style.transform = 'none';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = 'none';
+    }
   });
 }

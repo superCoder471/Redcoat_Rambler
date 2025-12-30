@@ -541,12 +541,25 @@ footer {
   z-index: 101;
 }
 
+/* The default state (Menu Closed) */
 .menu-toggle span {
   width: 25px;
   height: 3px;
-  background: oklch(95% 0.01 260);
+  background: oklch(95% 0.01 260); /* Always white when closed */
   border-radius: 2px;
-  transition: 0.3s;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+/* The "Engulfed" state (Menu Open) */
+/* We only want it to turn black if we are in LIGHT mode */
+[data-theme="light"] nav.active ~ .menu-toggle span,
+[data-theme="light"] .menu-toggle.is-active span {
+  background: oklch(18% 0.02 260); /* Switches to black/dark for contrast */
+}
+
+/* If in DARK mode, it can stay white because the panel is also dark */
+[data-theme="dark"] .menu-toggle.is-active span {
+  background: oklch(95% 0.01 260); 
 }
 
 @media (max-width: 768px) {
