@@ -21,3 +21,17 @@ toggleButton.addEventListener('click', () => {
     localStorage.setItem('theme', 'light');
   }
 });
+
+// --- NEW MOBILE MENU LOGIC ---
+const menuToggle = document.getElementById('mobile-menu-btn');
+const navMenu = document.querySelector('nav');
+
+if (menuToggle) {
+  menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+    
+    // Optional: Animate hamburger to X
+    const spans = menuToggle.querySelectorAll('span');
+    spans.forEach(span => span.classList.toggle('open'));
+  });
+}

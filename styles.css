@@ -524,3 +524,75 @@ footer {
 #theme-toggle:active {
   transform: translateY(0px);
 }
+
+/* =========================
+   MOBILE RESPONSIVENESS
+   ========================= */
+
+/* Hamburger Icon styling */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 10px;
+  z-index: 101;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: var(--text-main);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+  /* 1. Stack the Grid blocks into one column */
+  .story-grid, .authors-grid {
+    grid-template-columns: 1fr; /* */
+  }
+
+  /* 2. Mobile Navbar Logic */
+  .menu-toggle {
+    display: flex; /* */
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden off-screen */
+    height: 100vh;
+    width: 280px; /* Fixed width for a sleeker look */
+    background: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns items to the left */
+    justify-content: flex-start; /* Starts items from the top */
+    padding: 80px 2rem 2rem 2rem; /* Top padding clears the logo area */
+    gap: 1.5rem; /* Consistent vertical spacing */
+    transition: 0.4s ease-in-out;
+    box-shadow: var(--shadow-heavy);
+    z-index: 100;
+  }
+
+  nav.active {
+    right: 0; /* Slide in */
+  }
+
+  nav a {
+    margin-left: 0;
+    font-size: 1.25rem;
+    width: 100%; /* Ensures padding applies to the whole row */
+    padding: 0.5rem 0;
+    border-bottom: 1px solid oklch(100% 0 0 / 0.05); /* Subtle separator */
+  }
+
+  /* Ensure the theme toggle aligns with the text links */
+  #theme-toggle {
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+  }
+}
