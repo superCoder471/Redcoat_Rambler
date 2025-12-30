@@ -14,6 +14,8 @@
   --text-main: oklch(95% 0.01 260);
   --text-muted: oklch(75% 0.02 260);
 
+  --tag-bg: oklch(30% 0.1 260);
+
   --shadow-soft: 0 8px 20px oklch(0% 0 0 / 0.35);
   --shadow-medium: 0 12px 35px oklch(0% 0 0 / 0.45);
   --shadow-heavy: 0 20px 60px oklch(0% 0 0 / 0.6);
@@ -25,13 +27,20 @@
   --bg-card: oklch(95% 0.02 260);
   --bg-elevated: oklch(92% 0.02 260);
 
-  /* Accent colors (lighter for gradients) */
+  /* Accent colors (for hero gradient) */
   --blue: oklch(80% 0.08 255);   /* lighter, softer blue */
   --red: oklch(75% 0.1 25);      /* lighter, softer red */
+
+  /* Gradient text colors (darker for readability) */
+  --text-gradient-blue: oklch(45% 0.15 255);  /* darker blue for text */
+  --text-gradient-red: oklch(40% 0.18 25);    /* darker red for text */
 
   /* Text */
   --text-main: oklch(18% 0.02 260);
   --text-muted: oklch(40% 0.02 260);
+
+  /* Tag background */
+  --tag-bg: oklch(85% 0.02 260);
 
   /* Shadows — lighter but still soft */
   --shadow-soft: 0 6px 18px oklch(0% 0 0 / 0.08);
@@ -171,9 +180,12 @@ nav a:hover {
    ========================= */
 
 .story-card {
+  display: block;
   background: var(--bg-card);
   padding: 2rem;
   border-radius: 18px;
+  text-decoration: none;
+  color: inherit;
 
   box-shadow:
     var(--shadow-soft),
@@ -198,16 +210,26 @@ nav a:hover {
   color: var(--text-muted);
 }
 
-.story-card a {
+.story-card .read-more {
   display: inline-block;
   margin-top: 1rem;
-  text-decoration: none;
   font-weight: 600;
 
   background: linear-gradient(
     120deg,
     var(--blue),
     var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Darker gradient text for light mode */
+[data-theme="light"] .story-card .read-more {
+  background: linear-gradient(
+    120deg,
+    var(--text-gradient-blue),
+    var(--text-gradient-red)
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -239,9 +261,12 @@ nav a:hover {
 }
 
 .archive-item {
+  display: block;
   background: var(--bg-card);
   padding: 2rem;
   border-radius: 18px;
+  text-decoration: none;
+  color: inherit;
 
   box-shadow:
     var(--shadow-soft),
@@ -268,7 +293,7 @@ nav a:hover {
 .archive-section {
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
-  background: oklch(30% 0.1 260);
+  background: var(--tag-bg);
   font-weight: 600;
 }
 
@@ -282,7 +307,7 @@ nav a:hover {
   max-width: 700px;
 }
 
-.archive-item a {
+.archive-item .read-more {
   display: inline-block;
   margin-top: 0.75rem;
   font-weight: 600;
@@ -291,6 +316,17 @@ nav a:hover {
     120deg,
     var(--blue),
     var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Darker gradient text for light mode */
+[data-theme="light"] .archive-item .read-more {
+  background: linear-gradient(
+    120deg,
+    var(--text-gradient-blue),
+    var(--text-gradient-red)
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -315,7 +351,7 @@ nav a:hover {
   padding: 0.3rem 0.8rem;
 
   border-radius: 999px;
-  background: oklch(32% 0.12 260);
+  background: var(--tag-bg);
   font-weight: 700;
   font-size: 0.8rem;
   letter-spacing: 0.05em;
@@ -348,7 +384,7 @@ nav a:hover {
 
 .article-body p {
   margin-bottom: 1.5rem;
-  color: oklch(92% 0.01 260);
+  color: var(--text-main);
 }
 
 .article-body h2 {
@@ -421,6 +457,17 @@ nav a:hover {
     120deg,
     var(--blue),
     var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Darker gradient text for light mode */
+[data-theme="light"] .author-card h3 {
+  background: linear-gradient(
+    120deg,
+    var(--text-gradient-blue),
+    var(--text-gradient-red)
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
