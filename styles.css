@@ -106,13 +106,13 @@ body {
 nav a {
   margin-left: 2rem;
   text-decoration: none;
-  color: var(--text-muted);
+  color: oklch(75% 0.02 260); /* Dark mode text-muted value for consistent visibility */
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
 nav a:hover {
-  color: var(--text-main);
+  color: oklch(95% 0.01 260); /* Dark mode text-main value for hover state */
 }
 
 /* =========================
@@ -511,12 +511,10 @@ footer {
 
   font-size: 1.4rem;
   font-weight: 700;
-  transition: 
-    transform 0.2s ease,
-    filter 0.3s ease;
+  transition: transform 0.2s ease;
 
-  /* Default dark mode - blue moon */
-  filter: hue-rotate(220deg) brightness(1.2);
+  /* Default yellow sun/moon - no color filter */
+  filter: none;
 }
 
 #theme-toggle:hover {
@@ -525,10 +523,4 @@ footer {
 
 #theme-toggle:active {
   transform: translateY(0px);
-}
-
-/* Light theme overrides */
-[data-theme="light"] #theme-toggle {
-  /* Red sun */
-  filter: hue-rotate(0deg) brightness(1.2);
 }
