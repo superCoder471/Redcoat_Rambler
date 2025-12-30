@@ -72,47 +72,57 @@ body {
   line-height: 1.6;
 }
 
-/* =========================
-   NAVBAR
-   ========================= */
-
 .navbar {
-  background: oklch(20% 0.03 260);
-  padding: 1.25rem 2.5rem;
+  position: sticky;
+  top: 1.5rem;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; /* This vertically centers everything inside */
+  padding: 0.75rem 2rem;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1100px;
+  background: oklch(22% 0.03 260 / 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 100px;
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  box-shadow: var(--shadow-heavy);
+  transition: all 0.3s ease;
+}
 
-  box-shadow: var(--shadow-medium);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+/* Light Mode Adjustment */
+[data-theme="light"] .navbar {
+  background: oklch(100% 0 0 / 0.7);
+  border: 1px solid oklch(0% 0 0 / 0.05);
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: 0.03em;
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  text-decoration: none;
+}
 
-  background: linear-gradient(
-    120deg,
-    var(--blue),
-    var(--red)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 nav a {
-  margin-left: 2rem;
   text-decoration: none;
-  color: oklch(75% 0.02 260); /* Dark mode text-muted value for consistent visibility */
-  font-weight: 500;
-  transition: color 0.2s ease;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
 }
 
 nav a:hover {
-  color: oklch(95% 0.01 260); /* Dark mode text-main value for hover state */
+  opacity: 1;
 }
 
 /* =========================
@@ -120,7 +130,6 @@ nav a:hover {
    ========================= */
 
 .container {
-  max-width: 1150px;
   margin: 0 auto;
   padding: 3rem 2rem;
 }
@@ -545,7 +554,7 @@ footer {
 .menu-toggle span {
   width: 25px;
   height: 3px;
-  background: oklch(95% 0.01 260); /* Always white when closed */
+  background: var(--text-main);
   border-radius: 2px;
   transition: background 0.3s ease, transform 0.3s ease;
 }
@@ -554,12 +563,12 @@ footer {
 /* We only want it to turn black if we are in LIGHT mode */
 [data-theme="light"] nav.active ~ .menu-toggle span,
 [data-theme="light"] .menu-toggle.is-active span {
-  background: oklch(18% 0.02 260); /* Switches to black/dark for contrast */
+  background: var(--text-main); /* Switches to black/dark for contrast */
 }
 
 /* If in DARK mode, it can stay white because the panel is also dark */
 [data-theme="dark"] .menu-toggle.is-active span {
-  background: oklch(95% 0.01 260); 
+  background: var(--text-main); 
 }
 
 @media (max-width: 768px) {
@@ -571,10 +580,11 @@ footer {
   /* The Waffle Button - Fixed to the top right */
   .menu-toggle {
     display: flex;
-    position: fixed; 
-    top: 1.25rem; 
-    right: 1.5rem;
-    z-index: 110; /* Sits above everything */
+    position: relative; /* Change from 'fixed' or 'absolute' */
+    top: unset;        /* Reset hardcoded top */
+    right: unset;      /* Reset hardcoded right */
+    padding: 0;        /* Tighten padding to match logo height */
+    z-index: 101;
   }
 
   /* The Floating Menu - Shorter and Rounded */
@@ -628,7 +638,7 @@ footer {
     align-self: flex-start;
     margin: 0 0 10px 10px;
     padding: 8px 12px;
-    background: var(--tag-bg);
+    
     border-radius: 10px;
   }
 }
