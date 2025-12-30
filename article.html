@@ -6,15 +6,15 @@
   <title>Article Title – Redcoat Rambler</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
 
   <header class="navbar">
     <h1 class="logo">Redcoat Rambler</h1>
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+      <span></span><span></span><span></span>
+    </button>
     <nav>
-        <button id="theme-toggle" aria-label="Toggle light/dark mode">
-        🌙
-        </button>
+      <button id="theme-toggle">🌙</button>
       <a href="index.html">Home</a>
       <a href="archive.html">Archive</a>
       <a href="authors.html">Meet the Authors</a>
@@ -22,56 +22,54 @@
   </header>
 
   <main class="container">
-    <article class="article">
-
-      <header class="navbar">
-        <h1 class="logo">Redcoat Rambler</h1>
+    <article class="article-content">
+      
+      
+        <span class="category-tag">News</span>
+        <h1 class="headline">The Hidden History of Berlin High: What Lies Beneath the Courtyard?</h1>
+        <p class="dek">An investigation into the original 1930s blueprints reveals a forgotten time capsule and a mystery that has spanned generations.</p>
         
-        <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <div class="article-meta-wrapper">
+          <div class="author-info">
+            <span class="author-name">By Jane Doe</span>
+            <span class="article-date">October 12, 2025 • 6 min read</span>
+          </div>
 
-        <nav>
-          <button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
-          <a href="index.html">Home</a>
-          <a href="archive.html">Archive</a>
-          <a href="authors.html">Meet the Authors</a>
-        </nav>
-      </header>
+          <div class="article-actions">
+            <button id="share-btn" class="action-btn">
+              <span class="icon">🔗</span> Share
+            </button>
+          </div>
+        </div>
+     
 
-      <div class="article-body">
-        <p>
-          This is the opening paragraph of the article. It should hook the reader and clearly establish
-          why this story matters.
+      <div class="story-body">
+        <p class="lead">
+          It started with a loose brick near the cafeteria exit. What seemed like a simple maintenance issue quickly turned into a historical discovery for the Berlin High community.
         </p>
 
         <p>
-          Subsequent paragraphs go into more detail, expanding on the topic with quotes, context, and
-          reporting. Keep paragraphs relatively short for readability.
+          Students have walked past the central courtyard for decades, unaware that just three feet below the manicured grass sits a reinforced concrete vault.
         </p>
 
-        <h2>A Section Heading</h2>
+        <blockquote class="pull-quote">
+          "We always heard rumors about a bunker, but seeing the actual brass seal on the floor was something else entirely."
+        </blockquote>
 
+        <h2>The Investigation</h2>
         <p>
-          Section headers help guide the reader through longer articles. They also make the piece easier
-          to scan on screens.
+          According to records found in the town basement, the vault was commissioned in 1938. This was a time of significant expansion for the school district.
         </p>
-
+        
         <p>
-          Continue the story here. This layout is designed to handle very long articles without becoming
-          tiring to read.
+          The reporting team spent three weeks interviewing former faculty members. Most remembered the stories, but few had seen the blueprints.
         </p>
       </div>
 
     </article>
   </main>
 
-  <footer>
-    <p>© 2025 Redcoat Rambler</p>
-  </footer>
-<script src="theme.js"></script>
-
+  <footer><p>© 2025 Redcoat Rambler</p></footer>
+  <script src="theme.js"></script>
 </body>
 </html>

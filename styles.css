@@ -534,6 +534,199 @@ footer {
   transform: translateY(0px);
 }
 
+
+/* =========================
+   ARTICLE VIEWER STYLES
+   ========================= */
+
+.article-content {
+  max-width: 750px; /* Essential for readability: lines shouldn't be too wide */
+  margin: 4rem auto;
+}
+
+.article-header {
+  margin-bottom: 3rem;
+  border-bottom: 1px solid oklch(100% 0 0 / 0.1);
+  padding-bottom: 3rem;
+}
+
+.category-tag {
+  color: var(--blue);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
+.headline {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.1;
+  margin: 1rem 0;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+}
+
+.dek {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 2rem;
+}
+
+/* Author Section */
+.author-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.author-name {
+  display: block;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.article-date {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Story Body Typography */
+.story-body {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-main);
+}
+
+.lead {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.story-body p {
+  margin-bottom: 1.5rem;
+}
+
+.story-body h2 {
+  font-size: 2rem;
+  margin: 3rem 0 1rem 0;
+  font-weight: 800;
+}
+
+/* Pull Quote Styling */
+.pull-quote {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 3rem -4rem; /* Extends out of the text column on desktop */
+  padding: 2rem;
+  border-left: 4px solid var(--red);
+  font-style: italic;
+  color: var(--text-main);
+  background: var(--bg-card);
+  border-radius: 0 20px 20px 0;
+}
+
+@media (max-width: 900px) {
+  .pull-quote {
+    margin: 2rem 0;
+    font-size: 1.5rem;
+  }
+}
+
+.article-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.action-btn {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  padding: 0.6rem 1.2rem;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.action-btn:hover {
+  background: var(--bg-elevated);
+  transform: translateY(-2px);
+  border-color: var(--blue);
+}
+
+.action-btn .icon {
+  font-size: 1.1rem;
+}
+
+
+/* Container to pull author left and share right */
+.article-meta-wrapper {
+  display: flex;
+  justify-content: space-between; /* Pushes button to the far right */
+  align-items: center;            /* Centers items vertically between the lines */
+  padding: 1.25rem 0;             /* Symmetrical vertical padding for centering */
+  border-top: 1px solid oklch(100% 0 0 / 0.1);
+  border-bottom: 1px solid oklch(100% 0 0 / 0.1); /* Adds the second grey line */
+  margin: 2rem 0;                 /* Space away from dek and body text */
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.author-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.article-date {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.article-actions {
+  margin-top: 0; /* Ensures no weird offsets */
+}
+
+/* Tweak button to feel vertically balanced */
+.action-btn {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  line-height: 1; /* Prevents text height from pushing the button off-center */
+}
+
+.action-btn:hover {
+  background: var(--bg-elevated);
+  transform: translateY(-2px);
+}
+
 /* =========================
    MOBILE RESPONSIVENESS
    ========================= */

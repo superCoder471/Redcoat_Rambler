@@ -45,3 +45,32 @@ if (menuBtn) {
     }
   });
 }
+
+//SHARE BUTTOIN
+const shareBtn = document.getElementById('share-btn');
+
+if (shareBtn) {
+  shareBtn.addEventListener('click', async () => {
+    const shareData = {
+      title: document.title,
+      text: 'Check out this story from the Redcoat Rambler!',
+      url: window.location.href,
+    };
+
+    try {
+      // Check if the browser supports native sharing
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback: Copy to clipboard if sharing isn't supported
+        await navigator.clipboard.writeText(window.location.href);
+        shareBtn.innerHTML = '<span class="icon">✅</span> Link Copied';
+        setTimeout(() => {
+          shareBtn.innerHTML = '<span class="icon">🔗</span> Share Story';
+        }, 2000);
+      }
+    } catch (err) {
+      console.log('Error sharing:', err);
+    }
+  });
+}
