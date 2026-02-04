@@ -1,11 +1,3 @@
-1. The "Read Progress" Bar
-Since you have a floating navbar, it is very easy to add a thin progress bar at the bottom of the pill that fills up as the user scrolls through an article. It’s a great visual cue for long-form news.
-
-How to do it:
-
-CSS: Create a div inside your .navbar with a width of 0% and a height of 2px.
-
-JS: A simple 3-line scroll listener that updates that width based on the scroll percentage.
 
 2. Custom 404 "Page Not Found"
 Every professional publication needs a stylish 404 page. It’s a chance to show some personality.
