@@ -18,8 +18,8 @@ db.run(`
   )
 `);
 
-const ADMIN_PASSWORD = "test"; // Change this for real use!
-const AUTH_COOKIE = "auth_token=simple_secret_123";
+const ADMIN_PASSWORD = Bun.env.ADMIN_PASSWORD; 
+const AUTH_COOKIE = `auth_token=${Bun.env.COOKIE_SECRET}`;
 
 // Helper function to check if the user is logged in
 const isAuthorized = (req) => {
