@@ -1,141 +1,118 @@
 import { Database } from "bun:sqlite";
 
-// 1. Initialize the SQLite database (creates journalism.db if it doesn't exist)
+// 1. Initialize Database
 const db = new Database("journalism.db", { create: true });
 
-// 2. Create the table for your stories
-// Add 'featured' column (0 for false, 1 for true)
+// 2. Ensure Tables Exist
 db.run(`
   CREATE TABLE IF NOT EXISTS stories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT,
-    dek TEXT,
-    category TEXT,
-    content TEXT,
-    date TEXT,
-    featured INTEGER DEFAULT 0,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    title TEXT, dek TEXT, category TEXT, content TEXT, date TEXT,
+    featured INTEGER DEFAULT 0, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
   )
 `);
 db.run(`
   CREATE TABLE IF NOT EXISTS submissions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    email TEXT,
-    idea TEXT,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    name TEXT, email TEXT, idea TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
   )
 `);
 
-const ADMIN_PASSWORD = "test"; // Change this!
+const ADMIN_PASSWORD = "test"; // Change this for real use!
+const AUTH_COOKIE = "auth_token=simple_secret_123";
+
+// Helper function to check if the user is logged in
+const isAuthorized = (req) => {
+  const cookie = req.headers.get("Cookie");
+  return cookie && cookie.includes(AUTH_COOKIE);
+};
 
 console.log("📂 Database initialized.");
 
-// 3. Start the Bun Server
 Bun.serve({
   port: 3000,
   async fetch(req) {
     const url = new URL(req.url);
 
-    // --- API ROUTES ---
+    // --- PUBLIC ROUTES (Anyone can access) ---
 
-    // --- SECURE LOGIN ROUTE ---
+    // Login Route
     if (url.pathname === "/api/login" && req.method === "POST") {
       const body = await req.json();
-      console.log("Attempted Password:", body.password); // Add this line!
-      console.log("Expected Password:", ADMIN_PASSWORD);
-      
       if (body.password === ADMIN_PASSWORD) {
-        return new Response("Authorized", { status: 200 });
+        return new Response("Authorized", {
+          status: 200,
+          headers: {
+            "Set-Cookie": `${AUTH_COOKIE}; HttpOnly; Path=/; SameSite=Strict`
+          }
+        });
       }
       return new Response("Unauthorized", { status: 401 });
     }
 
-    // --- SUBMISSION ROUTE (SQL Injection Protected via Prepared Statements) ---
-    if (url.pathname === "/api/submit-idea" && req.method === "POST") {
+    // 1. PUBLIC: Anyone can submit an idea
+    if (url.pathname === "/api/submissions" && req.method === "POST") {
       const { name, email, idea } = await req.json();
       const query = db.prepare("INSERT INTO submissions (name, email, idea) VALUES (?, ?, ?)");
       query.run(name, email, idea);
       return new Response("Idea received!", { status: 201 });
     }
 
-    // --- GET SUBMISSIONS (For Admin Only) ---
-    if (url.pathname === "/api/submissions" && req.method === "GET") {
-      const subs = db.query("SELECT * FROM submissions ORDER BY id DESC").all();
-      return Response.json(subs);
+    // Get Stories (for the homepage)
+    if (url.pathname === "/api/stories" && req.method === "GET") {
+      const stories = db.query("SELECT * FROM stories ORDER BY id DESC").all();
+      return Response.json(stories);
     }
 
-
-
-
-
-
-
-
-
-
-    if (url.pathname === "/api/submissions" && req.method === "POST") {
-      const body = await req.json();
-      db.run(
-        "INSERT INTO submissions (name, email, idea) VALUES (?, ?, ?)",
-        [body.name, body.email, body.idea]
-      );
-      return new Response("Idea submitted!", { status: 201 });
-    }
-  
-
-
-
-
-
-
-     // 2. GET FEATURED (Critical: Place this before the ID route)
+    // Get Featured Stories
     if (url.pathname === "/api/stories/featured" && req.method === "GET") {
       const featured = db.query("SELECT * FROM stories WHERE featured = 1 ORDER BY id DESC").all();
       return Response.json(featured);
     }
 
+    // --- ADMIN ROUTES (Requires Cookie) ---
 
-    // 1. GET ALL
-    if (url.pathname === "/api/stories" && req.method === "GET") {
-      const allStories = db.query("SELECT * FROM stories ORDER BY id DESC").all();
-      return Response.json(allStories);
+    if (url.pathname.startsWith("/api/submissions") || url.pathname.includes("/delete") || url.pathname.includes("/toggle")) {
+      if (!isAuthorized(req)) {
+        return new Response("Unauthorized access blocked", { status: 403 });
+      }
     }
 
-   
-
-    // 3. GET ONE SPECIFIC STORY
-    if (url.pathname.startsWith("/api/stories/") && req.method === "GET") {
-      const id = url.pathname.split("/").pop();
-      const story = db.query("SELECT * FROM stories WHERE id = ?").get(id);
-      return story ? Response.json(story) : new Response("Story Not Found", { status: 404 });
+    // 2. PRIVATE: Only admin (with cookie) can see ideas
+    if (url.pathname === "/api/submissions" && req.method === "GET") {
+      if (!isAuthorized(req)) {
+        return new Response("Unauthorized", { status: 403 });
+      }
+      const subs = db.query("SELECT * FROM submissions ORDER BY id DESC").all();
+      return Response.json(subs);
     }
 
-    // 4. POST NEW STORY
+    // Post New Story
     if (url.pathname === "/api/stories" && req.method === "POST") {
+      if (!isAuthorized(req)) return new Response("Forbidden", { status: 403 });
       const body = await req.json();
       db.run(
         "INSERT INTO stories (title, dek, category, content, date, featured) VALUES (?, ?, ?, ?, ?, 0)",
         [body.title, body.dek, body.category, body.content, body.date]
       );
-      return new Response("Story saved successfully!", { status: 201 });
+      return new Response("Story saved!", { status: 201 });
     }
 
-    // 5. TOGGLE FEATURED
+    // Toggle Featured
     if (url.pathname.startsWith("/api/stories/toggle/") && req.method === "POST") {
       const id = url.pathname.split("/").pop();
       db.run("UPDATE stories SET featured = 1 - featured WHERE id = ?", [id]);
       return new Response("Toggled");
     }
 
-    // 6. DELETE
+    // Delete Story
     if (url.pathname.startsWith("/api/stories/delete/") && req.method === "DELETE") {
       const id = url.pathname.split("/").pop();
       db.run("DELETE FROM stories WHERE id = ?", [id]);
       return new Response("Deleted");
     }
 
-    // --- FILE SERVER (Move this to the bottom!) ---
+    // --- STATIC FILE SERVER ---
     let filePath = "." + url.pathname;
     if (url.pathname === "/") filePath = "./index.html";
 
@@ -146,7 +123,6 @@ Bun.serve({
 
     return new Response("404 Not Found", { status: 404 });
   },
-  
 });
 
 console.log("🚀 Server running at http://localhost:3000");
