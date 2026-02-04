@@ -81,4 +81,36 @@ window.deleteStory = async (id) => {
   }
 };
 
+// Check password on the backend
+ window.checkLogin = async () => {
+  const password = document.getElementById('admin-pass').value;
+  const res = await fetch("/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" }, // Added this line
+    body: JSON.stringify({ password })
+  });
+
+  if (res.ok) {
+    document.getElementById('login-overlay').style.display = 'none';
+    loadSubmissions(); 
+  } else {
+    alert("Incorrect password!");
+  }
+};
+
+async function loadSubmissions() {
+  const response = await fetch("/api/submissions");
+  const subs = await response.json();
+  const list = document.getElementById("submissions-list");
+  list.innerHTML = subs.map(s => `
+    <div class="admin-item">
+      <div>
+        <strong>${s.name}</strong> (${s.email})<br>
+        <p>${s.idea}</p>
+        <small>${s.timestamp}</small>
+      </div>
+    </div>
+  `).join('');
+}
+
 loadAdminList(); // Run on page load

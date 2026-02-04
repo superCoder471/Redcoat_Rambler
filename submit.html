@@ -29,7 +29,7 @@
         <p>Have a lead on a story? Want us to investigate something? Let the Redcoat Rambler team know.</p>
       </header>
 
-      <form class="idea-form" onsubmit="event.preventDefault(); alert('Submission functionality is currently static.');">
+      <form class="idea-form" id="idea-form">
         <div class="form-group">
           <label for="name">Your Name (Optional)</label>
           <input type="text" id="name" placeholder="Jane Doe">
@@ -52,7 +52,7 @@
 
         <div class="form-group">
           <label for="idea">What's your idea?</label>
-          <textarea id="idea" rows="6" placeholder="Describe the story lead in detail..."></textarea>
+          <textarea id="idea" rows="6" placeholder="Describe the story lead in detail..." required></textarea>
         </div>
 
         <button type="submit" class="submit-btn">Send Idea</button>
@@ -64,5 +64,6 @@
     <p>© 2025 Redcoat Rambler</p>
   </footer>
   <script src="theme.js"></script>
+  <script src="submit.js"></script>
 </body>
 </html>

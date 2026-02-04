@@ -17,6 +17,17 @@ db.run(`
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
   )
 `);
+db.run(`
+  CREATE TABLE IF NOT EXISTS submissions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT,
+    idea TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
+const ADMIN_PASSWORD = "test"; // Change this!
 
 console.log("📂 Database initialized.");
 
@@ -28,6 +39,55 @@ Bun.serve({
 
     // --- API ROUTES ---
 
+    // --- SECURE LOGIN ROUTE ---
+    if (url.pathname === "/api/login" && req.method === "POST") {
+      const body = await req.json();
+      console.log("Attempted Password:", body.password); // Add this line!
+      console.log("Expected Password:", ADMIN_PASSWORD);
+      
+      if (body.password === ADMIN_PASSWORD) {
+        return new Response("Authorized", { status: 200 });
+      }
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    // --- SUBMISSION ROUTE (SQL Injection Protected via Prepared Statements) ---
+    if (url.pathname === "/api/submit-idea" && req.method === "POST") {
+      const { name, email, idea } = await req.json();
+      const query = db.prepare("INSERT INTO submissions (name, email, idea) VALUES (?, ?, ?)");
+      query.run(name, email, idea);
+      return new Response("Idea received!", { status: 201 });
+    }
+
+    // --- GET SUBMISSIONS (For Admin Only) ---
+    if (url.pathname === "/api/submissions" && req.method === "GET") {
+      const subs = db.query("SELECT * FROM submissions ORDER BY id DESC").all();
+      return Response.json(subs);
+    }
+
+
+
+
+
+
+
+
+
+
+    if (url.pathname === "/api/submissions" && req.method === "POST") {
+      const body = await req.json();
+      db.run(
+        "INSERT INTO submissions (name, email, idea) VALUES (?, ?, ?)",
+        [body.name, body.email, body.idea]
+      );
+      return new Response("Idea submitted!", { status: 201 });
+    }
+  
+
+
+
+
+
 
      // 2. GET FEATURED (Critical: Place this before the ID route)
     if (url.pathname === "/api/stories/featured" && req.method === "GET") {
@@ -35,7 +95,7 @@ Bun.serve({
       return Response.json(featured);
     }
 
-    
+
     // 1. GET ALL
     if (url.pathname === "/api/stories" && req.method === "GET") {
       const allStories = db.query("SELECT * FROM stories ORDER BY id DESC").all();
