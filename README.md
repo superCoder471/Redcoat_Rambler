@@ -1,139 +1,388 @@
-# Redcoat Rambler
+# 📰 Redcoat Rambler – Student Newspaper
 
-Website for the **Berlin High School Redcoat Rambler** student newspaper.
+<p align="center">
+  <img src="assets/images/logo.png" alt="Redcoat Rambler Logo" width="150" height="150" style="border-radius: 12px;">
+</p>
 
-Built with Bun, SQLite, and vanilla JS. No frameworks, no build step — just files served directly.
+<p align="center">
+  <strong>The official website of the Berlin High School Redcoat Rambler student newspaper.</strong><br>
+  Built with Bun, SQLite, and vanilla JavaScript. No frameworks, no build step — just pure, fast, and secure.
+</p>
 
-All CSS, tests, and this README are written by AI. I'm lazy and hate graphic design, deal with it.
+<p align="center">
+  <img src="https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white">
+  <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+  <img src="https://img.shields.io/badge/Tests-✔️-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge">
+</p>
 
 ---
 
-## Project structure
+## Table of Contents
+
+- [Features](#-features)
+- [Technology Stack](#-technology-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Environment Variables](#-environment-variables)
+- [Admin Setup](#-admin-setup)
+- [API Reference](#-api-reference)
+- [Testing](#-testing)
+- [Security](#-security)
+- [Deployment](#-deployment)
+- [Customization](#-customization)
+- [Acknowledgments](#-acknowledgments)
+
+---
+
+## Features
+
+### For Readers
+- **Homepage** – Displays featured stories with a clean, card-based layout.
+- **Archive** – Browse all published stories, filterable by category and author.
+- **Article Page** – Individual story view with readable typography, progress bar, and share button.
+- **Author Pages** – Meet the team, with links to each author's stories.
+- **Submit an Idea** – Public form to suggest story topics (no login required).
+- **Dark/Light Mode** – Toggleable theme with persistent local storage.
+- **Mobile Responsive** – Hamburger menu and fluid layouts for all devices.
+- **Custom 404 Page** – Playful "Story Redacted" error page.
+
+### For Admins
+- **Secure Admin Panel** – Password‑protected (`/admin.html`) with session‑based authentication.
+- **Publish Stories** – Rich text editor (Quill) to write and format articles.
+- **Manage Stories** – Edit, delete, or toggle featured status.
+- **Manage Submissions** – View and delete reader‑submitted ideas.
+
+### Technical Highlights
+- **No Frameworks** – Vanilla JS, pure CSS, and Bun runtime.
+- **SQLite Database** – Lightweight, file‑based, with prepared statements.
+- **Session Management** – Server‑side sessions with sliding expiry.
+- **XSS Protection** – Client‑side sanitization with DOMPurify; all outputs escaped.
+- **Static File Security** – Blocks dotfiles and path traversal.
+- **Comprehensive Tests** – Server API tests + frontend unit tests (escapeHTML, theme toggle).
+
+---
+
+## Technology Stack
+
+| Layer          | Technology                          |
+|----------------|-------------------------------------|
+| **Runtime**    | [Bun](https://bun.sh) v1.1+         |
+| **Database**   | SQLite (via `bun:sqlite`)           |
+| **Backend**    | Built‑in Bun HTTP server             |
+| **Frontend**   | Vanilla HTML, CSS, JavaScript        |
+| **Editor**     | [Quill](https://quilljs.com) (admin) |
+| **Sanitizer**  | [DOMPurify](https://github.com/cure53/DOMPurify) |
+| **Testing**    | Bun test + [Happy DOM](https://github.com/capricorn86/happy-dom) |
+| **Auth**       | bcrypt (Bun password), session cookies |
+
+---
+
+## 📁 Project Structure
 
 ```
-├── server.js              # Bun HTTP server + API routes
-├── journalism.db          # SQLite database (auto-created on first run)
-├── index.html             # Homepage (featured stories)
-├── archive.html           # Full story archive with filters
-├── article.html           # Individual article page
-├── authors.html           # Meet the Authors page
-├── submit.html            # Reader idea submission form
-├── admin.html             # Admin panel (password protected)
-├── 404.html               # Custom 404 page
-├── styles.css             # Global styles (dark/light theme)
-├── theme.js               # Theme toggle + mobile menu + scroll progress
-├── index-loader.js        # Fetches featured stories for homepage
-├── archive-loader.js      # Fetches + filters stories for archive
-├── article-loader.js      # Fetches individual story content
-├── submit.js              # Handles idea submission form
-├── admin.js               # Admin panel logic (publish, edit, delete, feature)
-├── server.test.js         # Server API tests
-├── frontend.test.js       # Frontend unit tests (escapeHTML, theme toggle)
-├── happydom.ts            # DOM environment for frontend tests
+.
+├── server.js              # Main HTTP server + all API routes
+├── journalism.db          # SQLite database (auto‑created)
+├── .env                   # Environment variables (ADMIN_HASH)
 ├── package.json           # Scripts and dev dependencies
-└── README.md
+├── bun.lock               # Bun lockfile
+├── README.md              # You are here
+│
+├── Public Pages
+│   ├── index.html         # Homepage (featured stories)
+│   ├── archive.html       # Full archive with filters
+│   ├── article.html       # Individual story view
+│   ├── authors.html       # Meet the authors
+│   ├── submit.html        # Idea submission form
+│   ├── admin.html         # Admin panel (protected)
+│   └── 404.html           # Custom error page
+│
+├── Assets & Styles
+│   ├── styles.css         # Global styles (dark/light theme)
+│   ├── assets/images/     # Logo and author placeholders
+│   └── theme.js           # Theme toggle + mobile menu + progress bar
+│
+├── JavaScript Loaders
+│   ├── index-loader.js    # Fetches featured stories for homepage
+│   ├── archive-loader.js  # Fetches + filters stories for archive
+│   ├── article-loader.js  # Fetches individual story + sanitizes content
+│   ├── submit.js          # Handles idea submission
+│   └── admin.js           # Admin panel logic (publish, edit, delete, feature)
+│
+├── Tests
+│   ├── server.test.js     # API endpoint tests
+│   ├── frontend.test.js   # escapeHTML + theme toggle tests
+│   ├── happydom.ts        # Happy DOM setup for frontend tests
+│   └── git_nuke.sh        # Utility to reset git history (optional)
 ```
 
 ---
 
-## Running the server
+## Getting Started
 
-```bash
-bun --hot run server.js
-```
+### Prerequisites
+- [Bun](https://bun.sh) installed (v1.1 or higher)
+- Git (optional)
 
-The server runs on `http://localhost:3000`. The `--hot` flag enables hot reloading on file changes.
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-org/redcoat-rambler.git
+   cd redcoat-rambler
+   ```
+
+2. **Install dev dependencies** (only needed for testing)
+   ```bash
+   bun install
+   ```
+
+3. **Set up environment variables** (see [Environment Variables](#-environment-variables))
+   ```bash
+   cp .env.example .env
+   # Edit .env with your ADMIN_HASH
+   ```
+
+4. **Run the server**
+   ```bash
+   bun --hot run server.js
+   ```
+   The server will start at `http://localhost:3000`.  
+   The `--hot` flag enables automatic restart on file changes.
+
+5. **Access the site**
+   - Public: `http://localhost:3000`
+   - Admin panel: `http://localhost:3000/admin.html`
 
 ---
 
-## Testing
+## Environment Variables
 
-```bash
-bun run test           # run all tests (server + frontend)
-bun run test:server    # server API tests only
-bun run test:frontend  # frontend unit tests only (requires happy-dom)
+The server expects a single environment variable:
+
+| Variable     | Description                                                                 |
+|--------------|-----------------------------------------------------------------------------|
+| `ADMIN_HASH` | bcrypt hash of the admin password (see [Admin Setup](#-admin-setup) below) |
+
+Create a `.env` file in the project root:
+
+```
+ADMIN_HASH=$2b$10$YourGeneratedHashHere
 ```
 
-The two test suites run in separate processes because the frontend tests use `happy-dom` to simulate a browser DOM, which would interfere with the server tests if run together.
-
-**Coverage:**
-- Server: all API routes, auth, session security, SQL injection protection, path traversal, dotfile blocking
-- Frontend: `escapeHTML` (XSS protection), theme toggle logic and localStorage persistence
+> **Important:** If you copy the hash from the terminal, escape every `$` with a backslash (`\$`) so the shell doesn't interpret them as variables.
 
 ---
 
-## Admin setup
+## 🧑Admin Setup
 
-### 1. Generate a password hash
+### 1. Generate a bcrypt password hash
 
 ```bash
 bun -e "console.log(await Bun.password.hash('yourpassword', 'bcrypt'))"
 ```
 
-### 2. Store it in a `.env` file
+### 2. Add the hash to `.env`
 
 ```
-ADMIN_HASH=\$2b\$10\$yourhashere...
+ADMIN_HASH=\$2b\$10\$YourGeneratedHashHere
 ```
 
-> **Important:** Add a `\` before every `$` in the hash when writing it to `.env`, otherwise the shell will try to interpret them as variables.
+### 3. Login
 
-### 3. Start the server
-
-The server reads `ADMIN_HASH` from the environment automatically. Login at `/admin.html`.
-
----
-
-## API reference
-
-All routes are served from `server.js`. Public routes are accessible without authentication. Admin routes require a valid session cookie set by `/api/login`.
-
-### Public
-
-| Method | Route | Description |
-|--------|-------|-------------|
-| `GET` | `/api/stories` | Get all stories. Supports `?category=` and `?author=` filters |
-| `GET` | `/api/stories/featured` | Get only featured stories |
-| `GET` | `/api/stories/:id` | Get a single story by ID |
-| `GET` | `/api/authors` | Get list of distinct author names |
-| `POST` | `/api/submissions` | Submit a story idea |
-| `POST` | `/api/login` | Log in with admin password, receives session cookie |
-| `POST` | `/api/logout` | Clear session cookie and invalidate session |
-
-### Admin (requires session cookie)
-
-| Method | Route | Description |
-|--------|-------|-------------|
-| `POST` | `/api/stories` | Create a new story |
-| `PUT` | `/api/stories/update/:id` | Update an existing story |
-| `DELETE` | `/api/stories/delete/:id` | Delete a story |
-| `POST` | `/api/stories/toggle/:id` | Toggle a story's featured status |
-| `GET` | `/api/submissions` | View all submitted ideas |
-| `DELETE` | `/api/submissions/delete/:id` | Delete a submission |
+- Navigate to `/admin.html`
+- Enter the password
+- On success, a secure `__Host-auth_token` cookie is set (valid 1 hour, sliding expiry)
 
 ---
 
-## Security notes
+## API Reference
 
-- Admin sessions are stored server-side in SQLite with a 1-hour sliding expiry
-- Session cookies are `HttpOnly`, `Secure`, `SameSite=Strict`, and use the `__Host-` prefix
-- The static file server blocks dotfiles (`.env`, `.git`, etc.) and path traversal attacks
-- All database queries use prepared statements (no SQL injection)
-- Article content is sanitized client-side with [DOMPurify](https://github.com/cure53/DOMPurify) before rendering
+All routes are served from `server.js`.  
+Base URL: `http://localhost:3000`
+
+### Public Routes (no authentication)
+
+| Method | Endpoint                     | Description                                      |
+|--------|------------------------------|--------------------------------------------------|
+| GET    | `/api/stories`               | Get all stories. Supports `?category=` & `?author=` |
+| GET    | `/api/stories/featured`      | Get only featured stories                        |
+| GET    | `/api/stories/:id`           | Get a single story by ID                         |
+| GET    | `/api/authors`               | Get list of distinct author names                 |
+| POST   | `/api/submissions`           | Submit a story idea (public)                     |
+| POST   | `/api/login`                 | Authenticate and receive session cookie           |
+| POST   | `/api/logout`                | Clear session cookie and invalidate session       |
+
+### Admin Routes (require session cookie)
+
+| Method | Endpoint                          | Description                          |
+|--------|-----------------------------------|--------------------------------------|
+| POST   | `/api/stories`                    | Create a new story                   |
+| PUT    | `/api/stories/update/:id`         | Update an existing story              |
+| DELETE | `/api/stories/delete/:id`         | Delete a story                        |
+| POST   | `/api/stories/toggle/:id`         | Toggle featured status                |
+| GET    | `/api/submissions`                | View all submitted ideas              |
+| DELETE | `/api/submissions/delete/:id`     | Delete a submission                   |
+
+### Example Requests
+
+**Get all stories**
+```bash
+curl http://localhost:3000/api/stories
+```
+
+**Filter by category**
+```bash
+curl "http://localhost:3000/api/stories?category=News"
+```
+
+**Submit an idea**
+```bash
+curl -X POST http://localhost:3000/api/submissions \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John","email":"john@example.com","idea":"Investigate the new cafeteria menu"}'
+```
+
+**Login (admin)**
+```bash
+curl -X POST http://localhost:3000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"password":"yourpassword"}' \
+  -c cookies.txt
+```
+
+**Publish a story (using saved cookie)**
+```bash
+curl -X POST http://localhost:3000/api/stories \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{"title":"New Story","dek":"Summary","author":"Jane","category":"News","content":"<p>Hello</p>","date":"Mar 25, 2025"}'
+```
 
 ---
 
-## Dependencies
+## Testing
 
-**Runtime:** none — Bun and its standard library handle everything.
+The project includes two test suites: **server API tests** and **frontend unit tests**.
 
-**Dev:**
-- `@happy-dom/global-registrator` — DOM simulation for frontend unit tests
+### Run all tests
+```bash
+bun run test
+```
+
+### Run only server tests
+```bash
+bun run test:server
+```
+
+### Run only frontend tests
+```bash
+bun run test:frontend
+```
+
+**What's tested?**
+- **Server:** All API endpoints, authentication, session expiry, SQL injection prevention, static file security (dotfiles, path traversal), and correct database operations.
+- **Frontend:** `escapeHTML` function (XSS protection) and theme toggle logic (localStorage, attribute changes).
+
+> Frontend tests use `happy-dom` to simulate a browser environment.
 
 ---
 
-## Environment variables
+## Security
 
-| Variable | Description |
-|----------|-------------|
-| `ADMIN_HASH` | bcrypt hash of the admin password |
+- **Authentication** – bcrypt‑hashed password, server‑side sessions stored in SQLite with 1‑hour sliding expiry.
+- **Cookies** – `__Host-auth_token` is `HttpOnly`, `Secure`, `SameSite=Strict`, and uses the `__Host-` prefix for domain‑locked security.
+- **SQL Injection** – All database queries use prepared statements.
+- **XSS** – User‑generated content (story bodies) is sanitized with DOMPurify on the client. All dynamic text is escaped via `escapeHTML()`.
+- **Static Files** – The file server blocks requests to dotfiles (`.env`, `.git`) and prevents path traversal (e.g., `../`).
+- **Session Cleanup** – Expired sessions are automatically deleted on each authentication check.
+
+---
+
+## Deployment
+
+Because the site is a single Bun server, deployment is straightforward.
+
+### Option 1: Bare Metal / VPS
+
+1. Transfer the project folder to your server.
+2. Ensure Bun is installed.
+3. Set environment variables (`.env`).
+4. Run with a process manager like `pm2` or `systemd`:
+
+   ```bash
+   bun run server.js &
+   ```
+
+### Option 2: Docker (example)
+
+A minimal `Dockerfile` could look like:
+
+```dockerfile
+FROM oven/bun:latest
+WORKDIR /app
+COPY . .
+RUN bun install --production
+EXPOSE 3000
+CMD ["bun", "run", "server.js"]
+```
+
+### Option 3: Fly.io / Render
+
+- Use the Bun buildpack or Docker image.
+- Set the `ADMIN_HASH` environment variable in the dashboard.
+- Expose port 3000.
+
+---
+
+## Customization
+
+### Styling
+
+All styles are in `styles.css`. The file uses CSS variables (OKLCH colors) for theming. To change the color scheme, modify the `:root` and `[data-theme="light"]` blocks.
+
+### Adding a New Page
+
+1. Create an HTML file (e.g., `about.html`).
+2. Include the common `<header>` and `<footer>`.
+3. Add any necessary JavaScript loaders.
+4. The static file server will serve it automatically.
+
+### Modifying the Admin Editor
+
+The admin panel uses Quill. You can customize the toolbar in `admin.js`:
+
+```js
+modules: {
+  toolbar: [
+    [{ 'header': [1, 2, false] }],
+    ['bold', 'italic', 'underline'],
+    // ... add more buttons
+  ]
+}
+```
+
+---
+
+## Acknowledgments
+
+- **AI‑assisted** – The CSS, README, and test suites were written with help from AI (as the author humorously notes: *"I hate graphic design, deal with it"*).
+- **Berlin High School** – For supporting student journalism.
+- **Bun** – For an incredibly fast and pleasant runtime.
+- **Open source libraries** – Quill, DOMPurify, Happy DOM.
+
+---
+
+## 📄 License
+
+This project is open source under the MIT License. Feel free to use, modify, and distribute it as you wish.
+
+---
+
+<p align="center">
+  Made by the Redcoat Rambler staff.
+</p>
