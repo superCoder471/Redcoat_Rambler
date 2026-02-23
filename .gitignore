@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Database
+journalism.db
+
+# Environment variables
+.env
+
+# macOS junk
+.DS_Store
+
+# Bun lockfile
+bun.lockb
+
+# script that nukes a github commit history (i commit passwords a lot. it comes in handy)
+git_nuke.sh
+
+

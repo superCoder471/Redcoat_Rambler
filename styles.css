@@ -1,0 +1,1226 @@
+/* =========================
+THIS CSS IS ALL AI :) I HATE GRAPHIC DESIGN
+ENJOY READING IT (all thousand lines of it) HAHA
+I HATE DOCUMENTATION YIPPIE!!!!!!
+========================= */
+
+/* Dark theme (default) */
+:root {
+  --bg-main: oklch(18% 0.02 260);
+  --bg-card: oklch(22% 0.03 260);
+  --bg-elevated: oklch(26% 0.04 260);
+
+  --blue: oklch(55% 0.18 255);
+  --red: oklch(50% 0.22 25);
+
+  --text-main: oklch(95% 0.01 260);
+  --text-muted: oklch(75% 0.02 260);
+
+  --tag-bg: oklch(30% 0.1 260);
+
+  --shadow-soft: 0 8px 20px oklch(0% 0 0 / 0.35);
+  --shadow-medium: 0 12px 35px oklch(0% 0 0 / 0.45);
+  --shadow-heavy: 0 20px 60px oklch(0% 0 0 / 0.6);
+  --nav-width: 90%;
+  --nav-border-radius: 100px;
+}
+
+[data-theme="light"] {
+  /* Backgrounds */
+  --bg-main: oklch(98% 0.01 260);
+  --bg-card: oklch(95% 0.02 260);
+  --bg-elevated: oklch(92% 0.02 260);
+
+  /* Accent colors (for hero gradient) */
+  --blue: oklch(80% 0.08 255);   /* lighter, softer blue */
+  --red: oklch(75% 0.1 25);      /* lighter, softer red */
+
+  /* Gradient text colors (darker for readability) */
+  --text-gradient-blue: oklch(45% 0.15 255);  /* darker blue for text */
+  --text-gradient-red: oklch(40% 0.18 25);    /* darker red for text */
+
+  /* Text */
+  --text-main: oklch(18% 0.02 260);
+  --text-muted: oklch(40% 0.02 260);
+
+  /* Tag background */
+  --tag-bg: oklch(85% 0.02 260);
+
+  /* Shadows — lighter but still soft */
+  --shadow-soft: 0 6px 18px oklch(0% 0 0 / 0.08);
+  --shadow-medium: 0 12px 30px oklch(0% 0 0 / 0.12);
+  --shadow-heavy: 0 20px 45px oklch(0% 0 0 / 0.18);
+}
+
+/* tell browser we support both modes */
+html {
+  color-scheme: light dark;
+}
+
+
+
+/* =========================
+   RESET & BASE
+   ========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.navbar {
+  position: sticky;
+  top: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* This vertically centers everything inside */
+  padding: 0.75rem 2rem;
+  margin: 0 auto;
+  width: var(--nav-width);
+  max-width: 1100px;
+  background: oklch(22% 0.03 260 / 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--nav-border-radius);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  box-shadow: var(--shadow-heavy);
+  transition: all 0.3s ease;
+}
+
+/* Light Mode Adjustment */
+[data-theme="light"] .navbar {
+  background: oklch(100% 0 0 / 0.7);
+  border: 1px solid oklch(0% 0 0 / 0.05);
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+nav a:hover {
+  opacity: 1;
+}
+
+/* =========================
+   LAYOUT
+   ========================= */
+
+.container {
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* =========================
+   HERO (keep the gradient 👀)
+   ========================= */
+
+.hero {
+  background:
+    radial-gradient(
+      120% 120% at top left,
+      oklch(70% 0.2 255 / 0.25),
+      transparent
+    ),
+    linear-gradient(
+      135deg,
+      var(--blue),
+      var(--red)
+    );
+
+  padding: 4rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-heavy);
+  margin-bottom: 4rem;
+}
+
+.hero h2 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.hero p {
+  color: var(--text-muted);
+  max-width: 600px;
+  font-size: 1.1rem;
+}
+
+/* =========================
+   STORIES
+   ========================= */
+
+.stories h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+/* =========================
+   STORY CARDS
+   ========================= */
+
+.story-card {
+  display: block;
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: 18px;
+  text-decoration: none;
+  color: inherit;
+
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 oklch(100% 0 0 / 0.05);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-heavy);
+}
+
+.story-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.story-card p {
+  color: var(--text-muted);
+}
+
+.story-card .read-more {
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 600;
+
+  background: linear-gradient(
+    120deg,
+    var(--blue),
+    var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Darker gradient text for light mode */
+[data-theme="light"] .story-card .read-more {
+  background: linear-gradient(
+    120deg,
+    var(--text-gradient-blue),
+    var(--text-gradient-red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   ARCHIVE PAGE
+   ========================= */
+
+.archive-header {
+  margin-bottom: 3rem;
+}
+
+.archive-header h2 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.archive-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.archive-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.archive-item {
+  display: block;
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: 18px;
+  text-decoration: none;
+  color: inherit;
+
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 oklch(100% 0 0 / 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.archive-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.archive-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.archive-section {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--tag-bg);
+  font-weight: 600;
+}
+
+.archive-item h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.archive-item p {
+  color: var(--text-muted);
+  max-width: 700px;
+}
+
+.archive-item .read-more {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-weight: 600;
+
+  background: linear-gradient(
+    120deg,
+    var(--blue),
+    var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Darker gradient text for light mode */
+[data-theme="light"] .archive-item .read-more {
+  background: linear-gradient(
+    120deg,
+    var(--text-gradient-blue),
+    var(--text-gradient-red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   ARTICLE PAGE
+   ========================= */
+
+.article {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.article-header {
+  margin-bottom: 3rem;
+}
+
+.article-section {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.8rem;
+
+  border-radius: 999px;
+  background: var(--tag-bg);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.article-header h1 {
+  font-size: 3rem;
+  line-height: 1.15;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+.article-dek {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin-bottom: 1.5rem;
+}
+
+.article-meta {
+  display: flex;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.article-body {
+  font-size: 1.05rem;
+}
+
+.article-body p {
+  margin-bottom: 1.5rem;
+  color: var(--text-main);
+}
+
+.article-body h2 {
+  font-size: 1.6rem;
+  margin: 3rem 0 1rem;
+  font-weight: 800;
+}
+
+/* =========================
+   AUTHORS PAGE
+   ========================= */
+
+.authors-header {
+  margin-bottom: 3rem;
+}
+
+.authors-header h2 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.authors-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.authors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+}
+
+.author-card {
+  background: var(--bg-card);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 oklch(100% 0 0 / 0.04);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.author-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-heavy);
+}
+
+.author-card img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.25rem;
+
+  box-shadow: var(--shadow-medium);
+}
+
+.author-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  font-weight: 800;
+
+  background: linear-gradient(
+    120deg,
+    var(--blue),
+    var(--red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Darker gradient text for light mode */
+[data-theme="light"] .author-card h3 {
+  background: linear-gradient(
+    120deg,
+    var(--text-gradient-blue),
+    var(--text-gradient-red)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+.author-role {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.author-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+/* =========================
+   THEME TOGGLE BUTTON ICON
+   ========================= */
+#theme-toggle {
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+
+  font-size: 1.4rem;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+
+  /* Default yellow sun/moon - no color filter */
+  filter: none;
+}
+
+#theme-toggle:hover {
+  transform: translateY(-3px);
+}
+
+#theme-toggle:active {
+  transform: translateY(0px);
+}
+
+
+/* =========================
+   ARTICLE VIEWER STYLES
+   ========================= */
+
+.article-content {
+  max-width: 750px; /* Essential for readability: lines shouldn't be too wide */
+  margin: 4rem auto;
+}
+
+.article-header {
+  margin-bottom: 3rem;
+  border-bottom: 1px solid oklch(100% 0 0 / 0.1);
+  padding-bottom: 3rem;
+}
+
+.category-tag {
+  color: var(--blue);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
+.headline {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.1;
+  margin: 1rem 0;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+}
+
+.dek {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 2rem;
+}
+
+/* Author Section */
+.author-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.author-name {
+  display: block;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.article-date {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Story Body Typography */
+.story-body {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-main);
+}
+
+.lead {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.story-body p {
+  margin-bottom: 1.5rem;
+}
+
+.story-body h2 {
+  font-size: 2rem;
+  margin: 3rem 0 1rem 0;
+  font-weight: 800;
+}
+
+/* Pull Quote Styling */
+.pull-quote {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 3rem -4rem; /* Extends out of the text column on desktop */
+  padding: 2rem;
+  border-left: 4px solid var(--red);
+  font-style: italic;
+  color: var(--text-main);
+  background: var(--bg-card);
+  border-radius: 0 20px 20px 0;
+}
+
+@media (max-width: 900px) {
+  .pull-quote {
+    margin: 2rem 0;
+    font-size: 1.5rem;
+  }
+}
+
+.article-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.action-btn {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  padding: 0.6rem 1.2rem;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.action-btn:hover {
+  background: var(--bg-elevated);
+  transform: translateY(-2px);
+  border-color: var(--blue);
+}
+
+.action-btn .icon {
+  font-size: 1.1rem;
+}
+
+
+/* Container to pull author left and share right */
+.article-meta-wrapper {
+  display: flex;
+  justify-content: space-between; /* Pushes button to the far right */
+  align-items: center;            /* Centers items vertically between the lines */
+  padding: 1.25rem 0;             /* Symmetrical vertical padding for centering */
+  border-top: 1px solid oklch(100% 0 0 / 0.1);
+  border-bottom: 1px solid oklch(100% 0 0 / 0.1); /* Adds the second grey line */
+  margin: 2rem 0;                 /* Space away from dek and body text */
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.author-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.article-date {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.article-actions {
+  margin-top: 0; /* Ensures no weird offsets */
+}
+
+/* Tweak button to feel vertically balanced */
+.action-btn {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  line-height: 1; /* Prevents text height from pushing the button off-center */
+}
+
+.action-btn:hover {
+  background: var(--bg-elevated);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   SUBMISSION PAGE
+   ========================= */
+
+.submission-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.submission-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.submission-header h2 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.submission-header p {
+  color: var(--text-muted);
+}
+
+.idea-form {
+  background: var(--bg-card);
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: var(--shadow-medium);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+  background: var(--bg-main);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, var(--blue), var(--red));
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-heavy);
+}
+
+
+/* =========================
+   PROGRESS BAR FIX
+   ========================= */
+#progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* CHANGE THIS: 100% means 'fill the available flat space' */
+  width: calc(100% - (var(--nav-border-radius)));
+  
+  /* This matches your navbar's own max-width minus the corners */
+  max-width: calc(1100px - (var(--nav-border-radius) * 2));
+  
+  height: 3px;
+  background: oklch(100% 0 0 / 0.05);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--blue), var(--red));
+  transition: width 0.1s ease-out;
+}
+
+
+
+/* =========================
+   404 ERROR PAGE
+   ========================= */
+
+.error-page {
+  text-align: center;
+  max-width: 600px;
+  margin: 6rem auto;
+  padding: 2rem;
+}
+
+.error-badge {
+  display: inline-block;
+  background: var(--tag-bg);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--red);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.error-title {
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+/* The "Redacted" Black Bar Effect */
+.redacted {
+  background: var(--text-main);
+  color: var(--text-main);
+  padding: 0 0.2rem;
+  transition: color 0.5s ease;
+  cursor: help;
+}
+
+.redacted:hover {
+  color: transparent; /* Makes it look like it's being "un-hidden" */
+}
+
+.error-text {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+.error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Reusable Button Styles */
+.primary-btn {
+  background: linear-gradient(135deg, var(--blue), var(--red));
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: transform 0.2s;
+}
+
+.secondary-btn {
+  background: var(--bg-card);
+  color: var(--text-main);
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  font-weight: 700;
+  transition: background 0.2s;
+}
+
+.primary-btn:hover, .secondary-btn:hover {
+  transform: translateY(-3px);
+}
+
+
+/* =========================
+   MOBILE RESPONSIVENESS
+   ========================= */
+
+/* Hamburger Icon styling */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 10px;
+  z-index: 201;
+}
+
+/* The default state (Menu Closed) */
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: var(--text-main);
+  border-radius: 2px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+/* The "Engulfed" state (Menu Open) */
+/* We only want it to turn black if we are in LIGHT mode */
+[data-theme="light"] nav.active ~ .menu-toggle span,
+[data-theme="light"] .menu-toggle.is-active span {
+  background: var(--text-main); /* Switches to black/dark for contrast */
+}
+
+/* If in DARK mode, it can stay white because the panel is also dark */
+[data-theme="dark"] .menu-toggle.is-active span {
+  background: var(--text-main); 
+}
+
+@media (max-width: 768px) {
+  /* Stack the stories into one column */
+  .story-grid, .authors-grid, .archive-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* The Waffle Button - Fixed to the top right */
+  .menu-toggle {
+    display: flex;
+    position: relative; /* Change from 'fixed' or 'absolute' */
+    top: unset;        /* Reset hardcoded top */
+    right: unset;      /* Reset hardcoded right */
+    padding: 0;        /* Tighten padding to match logo height */
+    z-index: 101;
+  }
+
+  /* The Floating Menu - Shorter and Rounded */
+  nav {
+    position: fixed;
+    top: 10px;
+    right: -110%; /* Hidden by default */
+    
+    /* Box Styling */
+    height: auto; 
+    width: 250px;
+    background: var(--bg-card);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 24px;
+    padding: 70px 1rem 1.5rem 1rem; /* Space at top for the waffle */
+    
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+    /* Smooth slide and bounce */
+    transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    box-shadow: var(--shadow-heavy);
+    border: 1px solid oklch(100% 0 0 / 0.1);
+    z-index: 100;
+  }
+
+  nav.active {
+    right: 10px; /* Floats 10px from the edge */
+  }
+
+  /* Menu Item Styling */
+  nav a {
+    margin-left: 0;
+    width: 100%;
+    padding: 12px 18px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 14px;
+    transition: background 0.2s;
+  }
+
+  nav a:active {
+    background: oklch(100% 0 0 / 0.1);
+  }
+
+  #theme-toggle {
+    align-self: flex-start;
+    margin: 0 0 10px 10px;
+    padding: 8px 12px;
+    
+    border-radius: 10px;
+  }
+}
+
+
+
+
+/* Container to hold both the image and the text */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Space between logo and text */
+}
+
+.logopic {
+  width: 75px;          /* Adjust size as needed */
+  height: 75px;
+  object-fit: cover;    /* Prevents stretching */
+  border-radius: 8px;   /* Optional: gives it soft rounded corners */
+  transition: transform 0.3s ease; /* Smooth hover effect */
+  margin: 0;
+}
+
+/* Fun hover effect to make it feel interactive */
+.logopic:hover {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+/* Ensure the H1 doesn't have extra margins that break alignment */
+.logo {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit; /* Keeps your original text color */
+  
+  /* Pushes the logo closer to the left edge of the navbar */
+  margin-left: -10px; 
+}
+
+.logo-link:hover {
+  opacity: 0.8;
+}
+
+
+
+/* Archive Filter Styling */
+.archive-controls {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid oklch(100% 0 0 / 0.05);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.filter-group label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.archive-controls select {
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--bg-main);
+  color: var(--text-main);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Archive List Styling */
+.archive-item {
+  display: block;
+  text-decoration: none;
+  background: var(--bg-card);
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 16px;
+  transition: transform 0.2s ease, background 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.archive-item:hover {
+  transform: translateY(-2px);
+  background: var(--bg-elevated);
+  border-color: var(--blue);
+}
+
+.archive-cat {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--tag-bg);
+  color: var(--blue);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.archive-title {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.archive-date {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+
+/* Styling for the clickable Author and Category in the Article page */
+#art-author a, 
+#art-category a {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+}
+
+#art-author a:hover, 
+#art-category a:hover {
+    /*text-decoration: underline; /* Optional: gives a hint that it's clickable on hover */
+    opacity: 0.6;
+    /* color: var(--blue); /* Optional: uses your theme's blue color on hover */
+}
+
+
+
+
+
+
+/* Specific title styling */
+.archive-title {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 10px 0;
+    text-decoration: none; /* Extra insurance to remove underline */
+}
+
+/* Hover effect for the whole bubble */
+.archive-item:hover {
+    background: var(--bg-elevated);
+    transform: translateY(-3px);
+    border-color: var(--blue);
+}
+
+/* Ensure other text stays muted */
+.archive-date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+/* Ensure author cards look like cards even as links */
+.author-card {
+    text-decoration: none;
+    color: inherit;
+    display: block; /* Makes the whole area clickable */
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.author-card:hover {
+    transform: translateY(-5px);
+    background: var(--bg-elevated);
+}
+
+.author-card h3 {
+    text-decoration: none;
+    color: var(--text-main);
+}

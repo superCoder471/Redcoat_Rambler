@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit an Idea – Redcoat Rambler</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+ <header class="navbar">
+      <div class="logo-container">
+    <a href="index.html" class="logo-link">
+      <img src="/assets/images/logo.png" alt="Redcoat Rambler Logo" class="logopic">
+      <h1 class="logo">Redcoat Rambler</h1>
+    </a>
+  </div>
+    
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav>
+      <button id="theme-toggle">🌙</button>
+      <a href="index.html">Home</a>
+      <a href="archive.html">Archive</a>
+      <a href="authors.html">Meet the Authors</a>
+      <a href="submit.html">Submit an Idea</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="submission-container">
+      <header class="submission-header">
+        <h2>Submit a Story Idea</h2>
+        <p>Have a lead on a story? Want us to investigate something? Let the Redcoat Rambler team know.</p>
+      </header>
+
+      <form class="idea-form" id="idea-form">
+        <div class="form-group">
+          <label for="name">Your Name (Optional)</label>
+          <input type="text" id="name" placeholder="Jane Doe">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address (Optional)</label>
+          <input type="email" id="email" placeholder="jane@example.com">
+        </div>
+
+        <div class="form-group">
+          <label for="category">Topic Category</label>
+          <select id="category">
+            <option value="News">News</option>
+            <option value="Sports">Sports</option>
+            <option value="Food">Food</option>
+            <option value="Movies">Movies</option>
+            <option value="Pop Culture">Pop Culture</option>
+            <option value="Clubs">Clubs</option>
+            <option value="School">School</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="idea">What's your idea?</label>
+          <textarea id="idea" rows="6" placeholder="Describe the story lead in detail..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Send Idea</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Redcoat Rambler</p>
+  </footer>
+  <script src="theme.js"></script>
+  <script src="submit.js"></script>
+</body>
+</html>

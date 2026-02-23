@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article Title – Redcoat Rambler</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo-container">
+    <a href="index.html" class="logo-link">
+      <img src="/assets/images/logo.png" alt="Redcoat Rambler Logo" class="logopic">
+      <h1 class="logo">Redcoat Rambler</h1>
+    </a>
+  </div>
+
+    <div id="progress-container">
+      <div id="progress-bar"></div>
+    </div>
+
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <button id="theme-toggle">🌙</button>
+      <a href="index.html">Home</a>
+      <a href="archive.html">Archive</a>
+      <a href="authors.html">Meet the Authors</a>
+      <a href="submit.html">Submit an Idea</a>
+    </nav>
+  </header>
+
+  <main class="container">
+  <article class="article-content">
+    <span id="art-category" class="category-tag">News</span>
+    <h1 id="art-title" class="headline"></h1>
+    <p id="art-dek" class="dek"></p>
+    
+    <div class="article-meta-wrapper">
+      <div class="author-info">
+        <span id="art-author" class="author-name">By Redcoat Staff</span>
+        <span id="art-date" class="article-date"></span>
+      </div>
+    </div>
+
+    <div id="art-content" class="article-body">
+      </div>
+  </article>
+</main>
+
+<script src="article-loader.js"></script>
+
+
+  <footer><p>© 2025 Redcoat Rambler</p></footer>
+  <script src="theme.js"></script>
+</body>
+</html>

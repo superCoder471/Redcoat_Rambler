@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "test:server": "bun test server.test.js",
+    "test:frontend": "bun test --preload ./happydom.ts frontend.test.js",
+    "test": "bun run test:server && bun run test:frontend"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@happy-dom/global-registrator": "^20.7.0"
+  }
+}

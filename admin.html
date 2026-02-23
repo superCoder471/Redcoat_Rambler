@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel – Redcoat Rambler</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<style>
+  /* This ensures the text is visible regardless of your site's dark mode */
+  .ql-editor {
+    min-height: 200px;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+
+  <header class="navbar">
+      <div class="logo-container">
+    <a href="index.html" class="logo-link">
+      <img src="/assets/images/logo.png" alt="Redcoat Rambler Logo" class="logopic">
+      <h1 class="logo">Redcoat Rambler</h1>
+    </a>
+  </div>
+    
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav>
+    
+      <button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
+      <a href="index.html">Home</a>
+      <a href="archive.html">Archive</a>
+      <a href="authors.html">Meet the Authors</a>
+      <a href="submit.html">Submit an Idea</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div id="login-overlay" style="position:fixed; inset:0; background:white; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+  <h2>Admin Access</h2>
+  <input type="password" id="admin-pass" placeholder="Enter Password">
+  <button onclick="checkLogin()">Login</button>
+  <a href="https://www.bettycrocker.com/-/media/GMI/Core-Sites/BC/Images/Shared/myaccount/footer-acq-landing-page-2025/09-2025_EmailSignUp_Cookies.jpg?sc_lang=en">We use one strictly necessary cookie for administrative authentication. We do not use tracking or marketing cookies.</a>
+</div>
+
+    <section class="submission-container">
+      <header class="submission-header">
+        <h2>Publish New Story</h2>
+      </header>
+
+      <form id="publish-form" class="idea-form">
+        <div class="form-group">
+          <label for="post-title">Headline</label>
+          <input type="text" id="post-title" placeholder="Enter a catchy headline..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="post-dek">Short Summary</label>
+          <input type="text" id="post-dek" placeholder="The secondary line under the headline..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="post-category">Category</label>
+          <select id="post-category">
+            <option value="News">News</option>
+            <option value="Sports">Sports</option>
+            <option value="Food">Food</option>
+            <option value="Movies">Movies</option>
+            <option value="Pop Culture">Pop Culture</option>
+            <option value="Clubs">Clubs</option>
+            <option value="School">School</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="post-author">Author Name</label>
+          <input type="text" id="post-author" placeholder="e.g., Jane Doe" required>
+        </div>
+
+        <div class="form-group">
+          <label>Story Content</label>
+          <div id="editor" style="height: 300px; background: white; color: black; border-radius: 12px;"></div>
+        </div>
+
+        <button type="submit" class="submit-btn">Publish to Website</button>
+      </form>
+    </section>
+    <section class="container" style="margin-top: 50px;">
+  <h3>Manage Existing Stories</h3>
+  <div id="admin-story-list" class="admin-grid">
+    </div>
+</section>
+<section class="container" style="margin-top: 50px;">
+  <h3>Idea Submissions</h3>
+  <div id="submissions-list" class="admin-grid">
+    </div>
+</section>
+
+<style>
+  .admin-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+  .admin-item { 
+    background: var(--bg-card); 
+    padding: 1rem; 
+    border-radius: 12px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+  }
+  .admin-btns { display: flex; gap: 10px; }
+  .btn-del { background: var(--red); color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; }
+  .btn-feat { background: var(--blue); color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; }
+  .btn-feat.active { background: #ffd700; color: black; } /* Gold color for featured */
+</style>
+  </main>
+
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="admin.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archive – Redcoat Rambler</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <header class="navbar">
+      <div class="logo-container">
+    <a href="index.html" class="logo-link">
+      <img src="/assets/images/logo.png" alt="Redcoat Rambler Logo" class="logopic">
+      <h1 class="logo">Redcoat Rambler</h1>
+    </a>
+  </div>
+    
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav>
+      <button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
+      <a href="index.html">Home</a>
+      <a href="archive.html">Archive</a>
+      <a href="authors.html">Meet the Authors</a>
+      <a href="submit.html">Submit an Idea</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="archive-header">
+      <h2>Archive</h2>
+      <p>Every story we’ve published, preserved.</p>
+    </section>
+
+
+
+    <div class="archive-controls">
+  <div class="filter-group">
+    <label for="filter-category">Category</label>
+    <select id="filter-category">
+      <option value="">All Categories</option>
+      <option value="News">News</option>
+            <option value="Sports">Sports</option>
+            <option value="Food">Food</option>
+            <option value="Movies">Movies</option>
+            <option value="Pop Culture">Pop Culture</option>
+            <option value="Clubs">Clubs</option>
+            <option value="School">School</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label for="filter-author">Author</label>
+    <select id="filter-author">
+      <option value="">All Authors</option>
+      </select>
+  </div>
+</div>
+
+<section id="archive-list" class="archive-list">
+  </section>
+
+<script src="archive-loader.js" defer></script>
+  </main>
+
+  <footer>
+    <p>© 2025 Redcoat Rambler</p>
+  </footer>
+<script src="theme.js"></script>
+
+</body>
+</html>
