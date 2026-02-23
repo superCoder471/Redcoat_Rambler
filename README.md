@@ -377,9 +377,23 @@ modules: {
 
 ---
 
-## 📄 License
+## License
 
-This project is open source under the MIT License. Feel free to use, modify, and distribute it as you wish.
+### Source Code
+The source code of this website (all files that make the site function) is open source under the [MIT License](LICENSE). You are free to use, modify, and distribute it, provided you include the original copyright notice.
+
+### Content
+All other content on this site, including but not limited to:
+- Articles
+- Author biographies
+- Images
+- Any other creative works
+
+is © 2025 Redcoat Rambler. All rights reserved. No part of this content may be reproduced, distributed, or transmitted without prior written permission.
+
+### Reader Submissions
+Reader‑submitted ideas are governed by the terms stated on the [Submit an Idea](submit.html) page.
+
 
 ---
 
