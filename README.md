@@ -81,7 +81,7 @@
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 .
@@ -178,7 +178,7 @@ ADMIN_HASH=$2b$10$YourGeneratedHashHere
 
 ---
 
-## 🧑Admin Setup
+## Admin Setup
 
 ### 1. Generate a bcrypt password hash
 
