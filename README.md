@@ -1,4 +1,4 @@
-# 📰 Redcoat Rambler – Student Newspaper
+# Redcoat Rambler – Student Newspaper
 
 <p align="center">
   <img src="assets/images/logo.png" alt="Redcoat Rambler Logo" width="300" height="300" style="border-radius: 12px;">
