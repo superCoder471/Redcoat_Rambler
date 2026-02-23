@@ -1,7 +1,7 @@
 # 📰 Redcoat Rambler – Student Newspaper
 
 <p align="center">
-  <img src="assets/images/logo.png" alt="Redcoat Rambler Logo" width="150" height="150" style="border-radius: 12px;">
+  <img src="assets/images/logo.png" alt="Redcoat Rambler Logo" width="300" height="300" style="border-radius: 12px;">
 </p>
 
 <p align="center">
