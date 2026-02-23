@@ -320,6 +320,7 @@ console.log("Database initialized.");
 if (import.meta.main) {
   Bun.serve({
     port: 3000,
+    //hostname: "0.0.0.0", 
     fetch: handleRequest,
   });
 
