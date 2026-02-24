@@ -1,0 +1,70 @@
+{
+  "rounds": [
+    {
+      "name": "Play-in",
+      "matches": [
+        {
+          "team1": "Team A",
+          "team2": "Team B",
+          "winner": "Team A"
+        },
+        {
+          "team1": "Team C",
+          "team2": "Team D",
+          "winner": "Team C"
+        }
+      ]
+    },
+    {
+      "name": "Round 1",
+      "matches": [
+        {
+          "team1": "Team A",
+          "team2": "Team E",
+          "winner": "Team A"
+        },
+        {
+          "team1": "Team C",
+          "team2": "Team F",
+          "winner": "Team C"
+        },
+        {
+          "team1": "Team G",
+          "team2": "Team H",
+          "winner": "Team G"
+        },
+        {
+          "team1": "Team I",
+          "team2": "Team J",
+          "winner": "Team I"
+        }
+      ]
+    },
+    {
+      "name": "Quarterfinals",
+      "matches": [
+        {
+          "team1": "Team A",
+          "team2": "Team C",
+          "winner": "Team A"
+        },
+        {
+          "team1": "Team G",
+          "team2": "Team I",
+          "winner": "Team G"
+        }
+      ]
+    },
+    {
+      "name": "Semifinals",
+      "matches": [
+        {
+          "team1": "Team A",
+          "team2": "Team G",
+          "winner": "Team A"
+        }
+      ]
+    }
+    
+  ]
+}

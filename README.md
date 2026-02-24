@@ -49,12 +49,18 @@
 - **Dark/Light Mode** – Toggleable theme with persistent local storage.
 - **Mobile Responsive** – Hamburger menu and fluid layouts for all devices.
 - **Custom 404 Page** – Playful "Story Redacted" error page.
+- **Bracket System** – Interactive tournament bracket that can be displayed on the homepage. A teaser shows the selected round (up to three matches) with a link to the full bracket page (`bracket.html`), which displays all rounds in a scrollable grid. Bracket visibility and content are controlled by admins.
 
 ### For Admins
 - **Secure Admin Panel** – Password‑protected (`/admin.html`) with session‑based authentication.
 - **Publish Stories** – Rich text editor (Quill) to write and format articles.
 - **Manage Stories** – Edit, delete, or toggle featured status.
 - **Manage Submissions** – View and delete reader‑submitted ideas.
+- **Bracket Management** – A dedicated section in the admin panel to create and edit brackets.
+  - **Visual Editor** – Add, edit, and delete rounds and matches. Team names and winners can be set interactively; the winner dropdown updates in real time when team names change.
+  - **JSON Toggle** – Switch to a raw JSON editor for advanced users. Changes are validated when switching back to visual mode, ensuring data integrity.
+  - **Homepage Round Selection** – Choose which round (or "last round" automatically) appears in the homepage banner.
+  - **Visibility Control** – Show or hide the bracket on the public site with a single checkbox.
 
 ### Technical Highlights
 - **No Frameworks** – Vanilla JS, pure CSS, and Bun runtime.
@@ -62,7 +68,7 @@
 - **Session Management** – Server‑side sessions with sliding expiry.
 - **XSS Protection** – Client‑side sanitization with DOMPurify; all outputs escaped.
 - **Static File Security** – Blocks dotfiles and path traversal.
-- **Comprehensive Tests** – Server API tests + frontend unit tests (escapeHTML, theme toggle).
+- **Comprehensive Tests** – Server API tests, frontend unit tests (escapeHTML, theme toggle), and now full admin panel tests covering bracket editor logic.
 
 ---
 
@@ -93,16 +99,17 @@
 ├── README.md              # You are here
 │
 ├── Public Pages
-│   ├── index.html         # Homepage (featured stories)
+│   ├── index.html         # Homepage (featured stories) + bracket banner
 │   ├── archive.html       # Full archive with filters
 │   ├── article.html       # Individual story view
 │   ├── authors.html       # Meet the authors
 │   ├── submit.html        # Idea submission form
 │   ├── admin.html         # Admin panel (protected)
+│   ├── bracket.html       # Full bracket view
 │   └── 404.html           # Custom error page
 │
 ├── Assets & Styles
-│   ├── styles.css         # Global styles (dark/light theme)
+│   ├── styles.css         # Global styles (dark/light theme, bracket visuals)
 │   ├── assets/images/     # Logo and author placeholders
 │   └── theme.js           # Theme toggle + mobile menu + progress bar
 │
@@ -111,13 +118,16 @@
 │   ├── archive-loader.js  # Fetches + filters stories for archive
 │   ├── article-loader.js  # Fetches individual story + sanitizes content
 │   ├── submit.js          # Handles idea submission
-│   └── admin.js           # Admin panel logic (publish, edit, delete, feature)
+│   ├── admin.js           # Admin panel logic (publish, edit, delete, feature, bracket editor)
+│   ├── banner-loader.js   # Fetches bracket and renders homepage teaser
+│   └── bracket-loader.js  # Fetches bracket and renders full bracket page
 │
 ├── Tests
-│   ├── server.test.js     # API endpoint tests
+│   ├── server.test.js     # API endpoint tests (including bracket endpoints)
 │   ├── frontend.test.js   # escapeHTML + theme toggle tests
+│   ├── admin.test.js      # Comprehensive admin panel tests (bracket editor, login, saving)
 │   ├── happydom.ts        # Happy DOM setup for frontend tests
-│   └── git_nuke.sh        # Utility to reset git history (optional)
+│   └── git_nuke.sh        # Utility to reset git history (for when you accidentally commit your password... again)
 ```
 
 ---
@@ -216,6 +226,7 @@ Base URL: `http://localhost:3000`
 | POST   | `/api/submissions`           | Submit a story idea (public)                     |
 | POST   | `/api/login`                 | Authenticate and receive session cookie           |
 | POST   | `/api/logout`                | Clear session cookie and invalidate session       |
+| GET    | `/api/bracket`               | Get the current bracket (title, data, visibility) |
 
 ### Admin Routes (require session cookie)
 
@@ -227,6 +238,7 @@ Base URL: `http://localhost:3000`
 | POST   | `/api/stories/toggle/:id`         | Toggle featured status                |
 | GET    | `/api/submissions`                | View all submitted ideas              |
 | DELETE | `/api/submissions/delete/:id`     | Delete a submission                   |
+| POST   | `/api/bracket`                    | Update the bracket (title, data, visibility) – full server‑side validation |
 
 ### Example Requests
 
@@ -263,11 +275,24 @@ curl -X POST http://localhost:3000/api/stories \
   -d '{"title":"New Story","dek":"Summary","author":"Jane","category":"News","content":"<p>Hello</p>","date":"Mar 25, 2025"}'
 ```
 
+**Get the current bracket**
+```bash
+curl http://localhost:3000/api/bracket
+```
+
+**Update the bracket (admin)**
+```bash
+curl -X POST http://localhost:3000/api/bracket \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{"title":"Best Pet Bracket","data":{"rounds":[{"name":"Quarterfinals","matches":[{"team1":"Cat","team2":"Dog","winner":null}]}]},"is_visible":1}'
+```
+
 ---
 
 ## Testing
 
-The project includes two test suites: **server API tests** and **frontend unit tests**.
+The project includes three test suites: **server API tests**, **frontend unit tests**, and **admin panel tests**.
 
 ### Run all tests
 ```bash
@@ -284,11 +309,17 @@ bun run test:server
 bun run test:frontend
 ```
 
-**What's tested?**
-- **Server:** All API endpoints, authentication, session expiry, SQL injection prevention, static file security (dotfiles, path traversal), and correct database operations.
-- **Frontend:** `escapeHTML` function (XSS protection) and theme toggle logic (localStorage, attribute changes).
+### Run only admin tests
+```bash
+bun run test:admin
+```
 
-> Frontend tests use `happy-dom` to simulate a browser environment.
+**What's tested?**
+- **Server:** All API endpoints (stories, submissions, authentication, sessions, bracket), SQL injection prevention, static file security, and correct database operations. Tests use a separate `.env.test` file with a test password hash.
+- **Frontend:** `escapeHTML` function (XSS protection) and theme toggle logic (localStorage, attribute changes).
+- **Admin Panel:** Comprehensive tests for the bracket editor: loading data, rendering rounds and matches, updating team names and winner dropdowns, switching between visual and JSON modes, saving in both modes, and the login flow.
+
+> Frontend and admin tests use `happy-dom` to simulate a browser environment.
 
 ---
 
@@ -388,12 +419,10 @@ All other content on this site, including but not limited to:
 - Author biographies
 - Images
 - Any other creative works
-
 is © 2025 Redcoat Rambler. All rights reserved. No part of this content may be reproduced, distributed, or transmitted without prior written permission.
 
 ### Reader Submissions
 Reader‑submitted ideas are governed by the terms stated on the [Submit an Idea](submit.html) page.
-
 
 ---
 

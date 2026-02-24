@@ -2,10 +2,12 @@
   "scripts": {
     "test:server": "bun test server.test.js",
     "test:frontend": "bun test --preload ./happydom.ts frontend.test.js",
-    "test": "bun run test:server && bun run test:frontend"
+    "test:admin": "bun test --preload ./happydom.ts admin.test.js",
+    "test": "bun run test:server && bun run test:frontend && bun run test:admin"
   },
   "dependencies": {},
   "devDependencies": {
-    "@happy-dom/global-registrator": "^20.7.0"
+    "@happy-dom/global-registrator": "^20.7.0",
+    "dotenv": "^17.3.1"
   }
 }

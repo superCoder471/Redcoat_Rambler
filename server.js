@@ -243,6 +243,11 @@ export async function handleRequest(req) {
         return new Response("Invalid bracket data: must be an object", { status: 400 });
       }
 
+      // Validate homepage_round if present
+      if (data.homepage_round !== undefined && data.homepage_round !== null && typeof data.homepage_round !== 'string') {
+        return new Response("Invalid bracket data: 'homepage_round' must be a string or null", { status: 400 });
+      }
+
       // Validate rounds array exists and is an array
       if (!Array.isArray(data.rounds)) {
         return new Response("Invalid bracket data: missing or invalid 'rounds' array", { status: 400 });
@@ -261,7 +266,6 @@ export async function handleRequest(req) {
         // Validate each match
         for (let j = 0; j < round.matches.length; j++) {
           const match = round.matches[j];
-          // team1, team2, winner can be strings or null
           if (match.team1 !== undefined && typeof match.team1 !== 'string' && match.team1 !== null) {
             return new Response(`Invalid bracket data: round ${i}, match ${j} 'team1' must be string or null`, { status: 400 });
           }
