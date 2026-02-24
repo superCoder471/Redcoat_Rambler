@@ -40,6 +40,20 @@ db.run(`
 `);
 
 
+db.run(`
+  CREATE TABLE IF NOT EXISTS bracket (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    title TEXT NOT NULL DEFAULT 'Bracket',
+    data TEXT NOT NULL DEFAULT '{"rounds":[]}',
+    is_visible INTEGER NOT NULL DEFAULT 0,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+db.run(`
+  INSERT OR IGNORE INTO bracket (id, title, data, is_visible)
+  VALUES (1, 'Bracket', '{"rounds":[]}', 0)
+`);
+
 
 // const ADMIN_PASSWORD = Bun.env.ADMIN_PASSWORD; 
 //const AUTH_COOKIE = `auth_token=${Bun.env.COOKIE_SECRET}`;
@@ -170,6 +184,20 @@ export async function handleRequest(req) {
       }
     }
 
+
+    // Get the current bracket (public)
+    if (url.pathname === "/api/bracket" && req.method === "GET") {
+      const bracket = db.query("SELECT id, title, data, is_visible, updated_at FROM bracket WHERE id = 1").get();
+      if (!bracket) {
+        return new Response(JSON.stringify({ title: "Bracket", data: { rounds: [] }, is_visible: 0 }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+      // Parse the data JSON so it's returned as an object, not a string
+      bracket.data = JSON.parse(bracket.data);
+      return Response.json(bracket);
+    }
     
 
     // Logout
@@ -198,6 +226,63 @@ export async function handleRequest(req) {
 
     // --- ADMIN ROUTES (Requires Cookie) ---
 
+    // Update bracket (admin only)
+    if (url.pathname === "/api/bracket" && req.method === "POST") {
+      if (!isAuthorized(req)) return new Response("Forbidden", { status: 403 });
+
+      const body = await req.json();
+      const { title, data, is_visible } = body;
+
+      // Basic field validation
+      if (typeof title !== 'string' || (is_visible !== 0 && is_visible !== 1)) {
+        return new Response("Invalid title or visibility flag", { status: 400 });
+      }
+
+      // Validate bracket data structure
+      if (!data || typeof data !== 'object') {
+        return new Response("Invalid bracket data: must be an object", { status: 400 });
+      }
+
+      // Validate rounds array exists and is an array
+      if (!Array.isArray(data.rounds)) {
+        return new Response("Invalid bracket data: missing or invalid 'rounds' array", { status: 400 });
+      }
+
+      // Validate each round
+      for (let i = 0; i < data.rounds.length; i++) {
+        const round = data.rounds[i];
+        if (!round.name || typeof round.name !== 'string') {
+          return new Response(`Invalid bracket data: round ${i} missing 'name' (string)`, { status: 400 });
+        }
+        if (!Array.isArray(round.matches)) {
+          return new Response(`Invalid bracket data: round ${i} missing 'matches' array`, { status: 400 });
+        }
+
+        // Validate each match
+        for (let j = 0; j < round.matches.length; j++) {
+          const match = round.matches[j];
+          // team1, team2, winner can be strings or null
+          if (match.team1 !== undefined && typeof match.team1 !== 'string' && match.team1 !== null) {
+            return new Response(`Invalid bracket data: round ${i}, match ${j} 'team1' must be string or null`, { status: 400 });
+          }
+          if (match.team2 !== undefined && typeof match.team2 !== 'string' && match.team2 !== null) {
+            return new Response(`Invalid bracket data: round ${i}, match ${j} 'team2' must be string or null`, { status: 400 });
+          }
+          if (match.winner !== undefined && typeof match.winner !== 'string' && match.winner !== null) {
+            return new Response(`Invalid bracket data: round ${i}, match ${j} 'winner' must be string or null`, { status: 400 });
+          }
+        }
+      }
+
+      const dataStr = JSON.stringify(data);
+      db.prepare(`
+        UPDATE bracket
+        SET title = ?, data = ?, is_visible = ?, updated_at = CURRENT_TIMESTAMP
+        WHERE id = 1
+      `).run(title, dataStr, is_visible);
+
+      return new Response("Bracket updated", { status: 200 });
+    }
 
         // 1. Delete Submission 
     if (url.pathname.startsWith("/api/submissions/delete/") && req.method === "DELETE") {

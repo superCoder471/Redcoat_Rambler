@@ -16,6 +16,52 @@ function escapeHTML(str) {
   p.textContent = str;
   return p.innerHTML;
 }
+
+
+// Load bracket data into the form
+async function loadBracket() {
+  const res = await fetch("/api/bracket");
+  if (!res.ok) {
+    console.error("Failed to load bracket");
+    return;
+  }
+  const bracket = await res.json();
+  document.getElementById('bracket-title').value = bracket.title || '';
+  document.getElementById('bracket-visible').checked = bracket.is_visible === 1;
+  document.getElementById('bracket-data').value = JSON.stringify(bracket.data, null, 2); // pretty print
+}
+
+// Save bracket data
+document.getElementById('save-bracket').addEventListener('click', async () => {
+  const title = document.getElementById('bracket-title').value.trim();
+  const is_visible = document.getElementById('bracket-visible').checked ? 1 : 0;
+  let data;
+  try {
+    data = JSON.parse(document.getElementById('bracket-data').value);
+  } catch (e) {
+    alert("Invalid JSON in bracket data");
+    return;
+  }
+
+  const payload = { title, data, is_visible };
+
+  const res = await fetch("/api/bracket", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  if (res.ok) {
+    alert("✅ Bracket saved!");
+    // Optionally reload to show updated data
+    loadBracket();
+  } else {
+    const err = await res.text();
+    alert("❌ Error: " + err);
+  }
+});
+
+
 const publishForm = document.getElementById('publish-form');
 
 // publishForm.addEventListener('submit', async (e) => {
@@ -101,6 +147,7 @@ window.deleteStory = async (id) => {
   if (res.ok) {
     document.getElementById('login-overlay').style.display = 'none';
     loadSubmissions(); 
+    loadBracket();
   } else {
     alert("Incorrect password!");
   }
@@ -203,3 +250,4 @@ publishForm.addEventListener('submit', async (e) => {
   alert(`Error: ${errorText}`);
 }
 });
+

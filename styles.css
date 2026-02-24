@@ -1243,3 +1243,43 @@ footer {
   width: auto;
   margin: 0;
 }
+
+
+
+
+
+
+/* Bracket banner */
+.bracket-banner {
+  background: var(--bg-card);
+  border-radius: 18px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: var(--shadow-medium);
+  border-left: 4px solid var(--blue);
+}
+
+.bracket-banner h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(120deg, var(--blue), var(--red));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.bracket-round {
+  margin: 1.5rem 0;
+}
+
+.bracket-round h4 {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.bracket-match {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid oklch(100% 0 0 / 0.1);
+  font-family: monospace;
+}
