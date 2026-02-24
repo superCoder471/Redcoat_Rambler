@@ -16,4 +16,3 @@ bun.lockb
 # script that nukes a github commit history (i commit passwords a lot. it comes in handy)
 git_nuke.sh
 
-
