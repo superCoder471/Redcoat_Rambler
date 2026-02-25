@@ -111,7 +111,7 @@ export async function handleRequest(req) {
       if (isMatch) {
         const token = crypto.randomUUID(); // secure random token
         
-        // expire in 24 hours
+        // expire in 1 hour
         const expires = new Date(Date.now() + 60 * 60 * 1000);
 
         db.prepare(
@@ -409,7 +409,7 @@ console.log("Database initialized.");
 if (import.meta.main) {
   Bun.serve({
     port: 3000,
-    //hostname: "0.0.0.0", 
+    hostname: "0.0.0.0", 
     fetch: handleRequest,
   });
 
